@@ -1,0 +1,7 @@
+.card {
+  box-sizing: border-box;
+  border-radius: 10px;
+  overflow: hidden;
+  max-height: 361px;
+  background-color: #fff;
+}
