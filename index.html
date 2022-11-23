@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preload" href="./vendor/font.css" as="font">
+  <link rel="stylesheet" href="./pages/index.css">
+  <title>Mesto</title>
+</head>
+<body class="page">
+  <header class="header">
+    <img src="./images/svg/logo-white.svg" alt="Логотип Место" class="header__logo">
+  </header>
+  <main class="content">
+    <div class="wrapper">
+      <div class="profile">
+        <div class="profile__avatar"></div>
+        <div class="profile__info"></div>
+        <div class="profile__add-button"></div>
+      </div>
+      <ul class="cards">
+        <li class="card">
+          <img src="./images/1088404.jpg" alt="Старое здание" class="card__image">
+          <p class="card__name">Карачаевск</p>
+          <img src="./images/svg/like.svg" alt="like" class="card__like">
+        </li>
+        <li class="card">
+          <img src="./images/1404681.png" alt="Поле" class="card__image">
+          <p class="card__name">Гора Эльбрус</p>
+          <img src="./images/svg/like.svg" alt="like" class="card__like">
+        </li>
+        <li class="card">
+          <img src="./images/1556355.png" alt="Горы" class="card__image">
+          <p class="card__name">Домбай</p>
+          <img src="./images/svg/like.svg" alt="like" class="card__like">
+        </li>
+        <li class="card">
+          <img src="./images/1404681.png" alt="Поле" class="card__image">
+          <p class="card__name">Гора Эльбрус</p>
+          <img src="./images/svg/like.svg" alt="like" class="card__like">
+        </li>
+        <li class="card">
+          <img src="./images/1556355.png" alt="Горы" class="card__image">
+          <p class="card__name">Домбай</p>
+          <img src="./images/svg/like.svg" alt="like" class="card__like">
+        </li>
+        <li class="card">
+          <img src="./images/1088404.jpg" alt="Старое здание" class="card__image">
+          <p class="card__name">Карачаево-Черкесия</p>
+          <img src="./images/svg/like.svg" alt="like" class="card__like">
+        </li>
+      </ul>
+    </div>
+    <div class="pop-up">
+      <h2 class="pop-up__title">Редактировать профиль</h2>
+      <form action="">
+        <input type="text" class="pop-up__input pop-up__input_type_name">
+        <input type="text" class="pop-up__input pop-up__input_type_description">
+        <input type="submit" value="Сохранить">
+      </form>
+      <img src="./images/svg/Close-icon.svg" alt="Закрыть">
+    </div>
+  </main>
+  <footer class="footer">
+    <p class="footer__copyright">© 2020 Mesto Russia</p>
+  </footer>
+</body>
+</html>
