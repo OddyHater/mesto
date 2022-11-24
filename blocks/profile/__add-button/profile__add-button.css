@@ -2,9 +2,27 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
   width: 150px;
   height: 50px;
+  background-image: url(../../../images/svg/add.svg);
+  background-repeat: no-repeat;
+  background-position: center;
   border: 2px solid #fff;
   border-radius: 2px;
   margin-left: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .profile__add-button {
+    margin: 0 auto;
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 426px) {
+  .profile__add-button {
+    width: 100%;
+    background-size: 16px 16px;
+  }
 }

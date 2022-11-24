@@ -14,15 +14,16 @@
   </header>
   <main class="content"> 
     <div class="profile">
-      <div class="profile__avatar"></div>
+      <img src="./images/Kusto.jpg" alt="Кусто" class="profile__avatar">
       <div class="profile__info">
-        <div class="profile__text">
-          <p class="profile__name">Жак-Ив Кусто</p>
+          <div class="profile__edit">
+            <p class="profile__name">Жак-Ив Кусто</p>
+            <div class="profile__edit-button clickable">
+            </div>
+          </div> 
           <p class="profile__description">Исследователь океана</p>
-        </div>
       </div>
       <div class="profile__add-button clickable">
-        <img src="./images/svg/add.svg" alt="Добавить">
       </div>
     </div>
     <ul class="cards list">
@@ -69,18 +70,21 @@
         </div>
       </li>
     </ul>
+  </main>
+  <div class="pop-up__wrapper">
     <div class="pop-up">
       <h2 class="pop-up__title">Редактировать профиль</h2>
-      <form action="">
-        <input type="text" class="pop-up__input pop-up__input_type_name">
-        <input type="text" class="pop-up__input pop-up__input_type_description">
-        <input type="submit" value="Сохранить">
+      <form action="#" class="pop-up__form">
+        <input type="text" class="pop-up__input pop-up__input_type_name" placeholder="Имя">
+        <input type="text" class="pop-up__input pop-up__input_type_description" placeholder="О себе">
+        <input type="submit" value="Сохранить" class="pop-up__submit">
       </form>
-      <img src="./images/svg/Close-icon.svg" alt="Закрыть" class="clicable">
+      <img src="./images/svg/Close-icon.svg" alt="Закрыть" class="pop-up__close-button clickable">
     </div>
-  </main>
+  </div>
   <footer class="footer">
     <p class="footer__copyright">© 2020 Mesto Russia</p>
-  </footer>
+  </footer> 
+  <script src="./script/script.js"></script>
 </body>
 </html>
