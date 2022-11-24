@@ -1,5 +1,5 @@
 const editButton = document.querySelector('.profile__edit-button'),
-      popUp = document.querySelector('.pop-up__wrapper'),
+      popUp = document.querySelector('.pop-up'),
       closeButton = popUp.querySelector('.pop-up__close-button'),
       saveButton = popUp.querySelector('.pop-up__submit'),
       profileEditName = popUp.querySelector('.pop-up__input_type_name'), // input "Имя" в pop-up

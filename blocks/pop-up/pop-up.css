@@ -1,19 +1,15 @@
 .pop-up {
-  position: relative;
-  display: block;
-  box-sizing: border-box;
-  max-width: 430px;
-  height: 330px;
-  margin: 0 auto;
-  border-radius: 10px;
-  background-color: #fff;
-  padding: 34px 36px 37px 36px;
+  position: fixed;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, .5);
 }
 
-@media screen and (max-width: 426px) {
-  .pop-up {
-  width: 282px;
-  height: 322px;
-  padding: 21px 22px;
-  }
-}
+
