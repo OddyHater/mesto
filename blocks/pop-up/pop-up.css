@@ -1,6 +1,5 @@
 .pop-up {
   position: relative;
-  margin: auto;
   display: block;
   box-sizing: border-box;
   max-width: 430px;
@@ -13,8 +12,8 @@
 
 @media screen and (max-width: 426px) {
   .pop-up {
-  width: 282px; 
-  height: 322px; 
+  width: 282px;
+  height: 322px;
   padding: 21px 22px;
   }
 }
