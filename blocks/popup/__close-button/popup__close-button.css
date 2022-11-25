@@ -4,10 +4,9 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  background-color: #000;
+  background-color: transparent;
   border: 0;
   outline: none;
-  background-color: transparent;
   width: 32px;
   height: 32px;
   top: -40px;
