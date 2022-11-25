@@ -3,6 +3,10 @@
   font-weight: 500;
   font-size: 42px;
   line-height: 1.14;
+  text-overflow: ellipsis;
+  max-width: 400px;
+  overflow: hidden;
+  white-space: nowrap; 
   color: #fff;
   margin: 0;
 }
@@ -11,5 +15,6 @@
   .profile__name {
     font-size: 27px;
     line-height: 33px;
+    margin-left: 24px;
   }
 }

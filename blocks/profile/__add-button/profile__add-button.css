@@ -8,9 +8,11 @@
   background-image: url(../../../images/svg/add.svg);
   background-repeat: no-repeat;
   background-position: center;
+  background-color: #000;
   border: 2px solid #fff;
   border-radius: 2px;
   margin-left: auto;
+  padding: 0;
 }
 
 @media screen and (max-width: 768px) {

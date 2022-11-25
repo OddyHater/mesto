@@ -9,6 +9,7 @@
   background-image: url(../../../images/svg/edit.svg);
   background-repeat: no-repeat;
   background-position: center;
+  background-color: #000;
 }
 
 @media screen and (max-width: 426px) {
@@ -16,6 +17,5 @@
     width: 18px;
     height: 18px;
     background-size: 7.5px 7.5px;
-  }
-  
+  }  
 }

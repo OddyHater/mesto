@@ -1,4 +1,4 @@
-.pop-up__submit {
+.popup__submit {
   box-sizing: border-box;
   max-width: 358px;
   height: 50px;
@@ -15,14 +15,14 @@
   transition: opacity .2s linear;
 }
 
-.pop-up__submit:hover {
+.popup__submit:hover {
   opacity: .8;
 }
 
 @media screen and (max-width: 426px) {
-  .pop-up__submit {
-  height: 46px;
-  font-size: 14px;
-  line-height: 17px;
+  .popup__submit {
+    height: 46px;
+    font-size: 14px;
+    line-height: 17px;
   }
 }
