@@ -18,8 +18,6 @@ function popUpClose() {
   popUp.classList.toggle('popup_opened');
 }
 
-editButton.addEventListener('click', popUpOpen);
-closeButton.addEventListener('click', popUpClose);
 
 function formSubmitHandler (evt) {  
   evt.preventDefault(); 
@@ -29,6 +27,9 @@ function formSubmitHandler (evt) {
   
   popUpClose();
 }
+
+editButton.addEventListener('click', popUpOpen);
+closeButton.addEventListener('click', popUpClose);
 
 popUpForm.addEventListener('submit', formSubmitHandler); 
 
