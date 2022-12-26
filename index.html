@@ -26,48 +26,7 @@
     </section>
     <section class="cards">
       <ul class="cards__list">
-        <li class="card">
-          <img src="./images/1088404.jpg" alt="Старое здание" class="card__image">
-          <div class="card__info">
-            <h3 class="card__name">Карачаевск</h3>
-            <button type="button" aria-label="Лайк" class="card__like"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img src="./images/1404681.png" alt="Поле" class="card__image">
-          <div class="card__info">
-            <h3 class="card__name">Гора Эльбрус</h3>
-            <button type="button" aria-label="Лайк" class="card__like"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img src="./images/1556355.png" alt="Горы" class="card__image">
-          <div class="card__info">
-            <h3 class="card__name">Домбай</h3>
-            <button type="button" aria-label="Лайк" class="card__like"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img src="./images/1404681.png" alt="Поле" class="card__image">
-          <div class="card__info">
-            <h3 class="card__name">Гора Эльбрус</h3>
-            <button type="button" aria-label="Лайк" class="card__like"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img src="./images/1556355.png" alt="Горы" class="card__image">
-          <div class="card__info">
-            <h3 class="card__name">Домбай</h3>
-            <button type="button" aria-label="Лайк" class="card__like"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img src="./images/1088404.jpg" alt="Старое здание" class="card__image">
-          <div class="card__info">
-            <h3 class="card__name">Карачаево-Черкесия</h3>
-            <button type="button" aria-label="Лайк" class="card__like"></button>
-          </div>
-        </li>
+      
       </ul>
     </section>
   </main>
@@ -85,6 +44,26 @@
       <button type="button" aria-label="Закрыть" class="popup__close-button clickable"></button>
     </div>
   </div>
+  <div class="popup-add">
+    <div class="popup-add__container">
+      <h2 class="popup-add__title">Новое место</h2>
+      <form name="add-card" class="popup-add__form">
+        <input type="text" name="card-name" class="popup-add__input popup-add__input_type_name" placeholder="Название" required>
+        <input type="text" name="card-image" class="popup-add__input popup-add__input_type_description" placeholder="Ссылка на картинку">
+        <input type="submit" value="Создать" class="popup-add__submit">
+      </form>
+      <button type="button" aria-label="Закрыть" class="popup-add__close-button clickable"></button>
+    </div>
+  </div>
+  <template class="template">
+    <li class="card">
+      <img src="" alt="" class="card__image">
+      <div class="card__info">
+        <h3 class="card__name"></h3>
+        <button type="button" aria-label="Лайк" class="card__like"></button>
+      </div>
+    </li>
+  </template>
   <script src="./script/index.js"></script>
 </body>
 </html>
