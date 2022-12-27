@@ -30,7 +30,7 @@
 @import url(../blocks/card/card.css);
 @import url(../blocks/card/__image/card__image.css);
 @import url(../blocks/card/__info/card__info.css);
-@import url(/blocks/card/__trash-button/card__trash-button.css);
+@import url(../blocks/card/__trash-button/card__trash-button.css);
 @import url(../blocks/card/__name/card__name.css);
 @import url(../blocks/card/__like/card__like.css);
 /*CARD*/
