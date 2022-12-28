@@ -19,7 +19,7 @@ const addCardButton = document.querySelector('.profile__add-button'),
 
 const popUpImage = document.querySelector('.popup-image'),
       popUpImageCloseButton = popUpImage.querySelector('.popup-image__close-button');
-      popUpImageImage = popUpImage.querySelector('.popup-image__image');
+      popUpImagePicture = popUpImage.querySelector('.popup-image__image');
       
 const initialCards = [  
   {
@@ -49,7 +49,34 @@ const initialCards = [
 ];
 
 
-//Рендер кард из массива
+function addLikeListener(likeButton) {
+  likeButton.addEventListener('click', function() {
+    likeButton.classList.toggle('like_active');
+  });
+};
+
+function addTrashListener(trashButton) {
+  trashButton.addEventListener('click', function() {
+    const listItem = trashButton.closest('.card');
+
+    listItem.remove();
+  });
+};
+
+function addOpenImagePopUp(imageElement) {
+  imageElement.addEventListener('click', function(evt) {
+    popUpImagePicture.src = evt.target.src;
+    popUpImage.classList.add('popup-image_opened');
+  }); 
+}
+
+function addEventListeners(trashButton, likeButton, imageElement) {
+  addTrashListener(trashButton);
+  addLikeListener(likeButton);
+  addOpenImagePopUp(imageElement);  
+};
+
+//Рендер карточек из массива
 initialCards.forEach(function(item) {
   const cloneTemplate = pageTemplate.content.cloneNode(true);
   const cardTitle = cloneTemplate.querySelector('.card__name');
@@ -62,26 +89,19 @@ initialCards.forEach(function(item) {
   cardTitle.textContent = item.name;
   cardImage.setAttribute('alt', item.name);
 
-  cardTrash.addEventListener('click', function() {
-    const listItem = cardTrash.closest('.card');
+  addEventListeners(cardTrash, cardLike, cardImage);
 
-    listItem.remove();
+
+  popUpImageCloseButton.addEventListener('click', function() {
+    popUpImage.classList.remove('.popup-image_opened');
   });
-
-  cardLike.addEventListener('click', function() {
-    cardLike.classList.toggle('like_active');
-  });
-
-  
  
 
   cardList.prepend(cloneTemplate); 
   
-  popUpImageCloseButton.addEventListener('click', function() {
-    popUpImage.classList.remove('.popup-image_opened');
-  });
+  
 });
-//Рендер кард из массива
+//Рендер карточек из массива
 
 
 //Profile popup
@@ -95,6 +115,14 @@ function popUpOpen() {
 function closePopUp() {
   popUp.classList.remove('popup_opened');
 } 
+
+function openPopUpImage (element) {
+  element.addEventListener('click', function(evt) {
+    
+    popUpImagePicture.src = evt.target.src;
+    // popUpImage.classList.toggle('popup-image_opened');
+  });
+};
 
 editButton.addEventListener('click', popUpOpen);
 closeButton.addEventListener('click', closePopUp);
@@ -114,9 +142,6 @@ addCardButton.addEventListener('click', popUpAddOpen);
 closeButtonAdd.addEventListener('click', closePopUpAdd);
 //Add Card popup
 
-//POPUP IMAGE//
-
-//POPUP IMAGE//
 
 
 
@@ -148,17 +173,9 @@ function renderNewCard (evt) {
 
   cardImage.setAttribute('src', addCardImage.value);
   cardTitle.textContent = addCardName.value;
-  cardImage.setAttribute('alt', addCardName.value);
+  cardImage.setAttribute('alt', addCardImage.value);
 
-  cardLike.addEventListener('click', function() {
-    cardLike.classList.toggle('like_active');
-  });
-
-  cardTrash.addEventListener('click', function() {
-    const listItem = cardTrash.closest('.card')
-
-    listItem.remove();
-  });
+  addEventListeners(cardTrash, cardLike, cardImage);
   
   cardList.prepend(cloneTemplate);  
   
@@ -169,15 +186,11 @@ function renderNewCard (evt) {
 const cardImage = document.querySelectorAll('.card__image');
 
 cardImage.forEach(function(item) {
-  item.addEventListener('click', function(evt) {
-    popUpImageImage.src = "";
-    popUpImageImage.src = evt.target.src;
-    popUpImage.classList.toggle('popup-image_opened');
-  });
+  openPopUpImage(item);
 });
 
 popUpImageCloseButton.addEventListener('click', function() {
-  
+  popUpImagePicture.src = "";
   popUpImage.classList.remove('popup-image_opened');
 });
 
