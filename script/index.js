@@ -19,7 +19,9 @@ const addCardButton = document.querySelector('.profile__add-button'),
 
 const popUpImage = document.querySelector('.popup-image'),
       popUpImageCloseButton = popUpImage.querySelector('.popup-image__close-button'),
-      popUpImagePicture = popUpImage.querySelector('.popup-image__image');
+      popUpImagePicture = popUpImage.querySelector('.popup-image__image'),
+      popUpImageCaption = popUpImage.querySelector('.popup-image__caption');
+
       
 const initialCards = [  
   {
@@ -66,8 +68,11 @@ function addTrashListener(trashButton) {            //удаление по кн
 function addOpenImagePopUp(imageElement) {        //открытие поп-апа с картинкой при клике 
   imageElement.addEventListener('click', function(evt) {
     popUpImagePicture.src = evt.target.src;
+    popUpImagePicture.alt = evt.target.alt;
     popUpImage.classList.add('popup-image_opened');
     popUpImageCloseButton.classList.remove('popup-image__close-button-inactive');
+    console.log(evt.target.alt);
+    popUpImageCaption.textContent = evt.target.alt;
   }); 
 };
 
@@ -100,9 +105,9 @@ initialCards.forEach(function(item) {
   const cardTrash = cloneTemplate.querySelector('.card__trash-button');  
   
   cardImage.setAttribute('src', item.link);
+  cardImage.alt = item.name;
   cardTitle.textContent = item.name;
-  cardImage.setAttribute('alt', item.name);
-
+  
   addEventListeners(cardTrash, cardLike, cardImage, popUpImageCloseButton);
 
   cardList.prepend(cloneTemplate);  
