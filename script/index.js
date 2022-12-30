@@ -1,28 +1,73 @@
 import {initialCards} from './cards.js';
 
+//Profile popup
 const popUpProfilOpenButton = document.querySelector('.profile__edit-button'),
-      popUp = document.querySelector('.popup'),
-      popUpForm = popUp.querySelector('.popup__form'),
-      popUpCloseButton = popUp.querySelector('.popup__close-button'),
-      popUpSubmitFormButton = popUp.querySelector('.popup__submit'),
-      popUpProfileEditName = popUp.querySelector('.popup__input_type_name'),
-      popUpProfileEditDescription = popUp.querySelector('.popup__input_type_description'),
+      popUpProfile = document.querySelector('#popup-profile'),
+      popUpProfileForm = popUpProfile.querySelector('.popup__form'),
+      popUpProfileEditName = popUpProfile.querySelector('.popup__input_type_name'),
+      popUpProfileEditDescription = popUpProfile.querySelector('.popup__input_type_description'),
+      popUpProfileCloseButton = popUpProfile.querySelector('.popup__close-button'),
       profileName = document.querySelector('.profile__name'),
-      profileDescription = document.querySelector('.profile__description'),
-      pageTemplate = document.querySelector('.template'),
-      cardList = document.querySelector('.cards__list');
+      profileDescription = document.querySelector('.profile__description');
+//Profile popup     
 
-const popUpNewCardButton = document.querySelector('.profile__add-button'),
-      popUpNewCard = document.querySelector('.popup-add'),
+//Create new card popup
+const popUpNewCardButton = document.querySelector('.profile__add-button'),      
+      popUpNewCard = document.querySelector('#popup-new-card'),
+      popUpNewCardCloseButton = popUpNewCard.querySelector('.popup-add__close-button'),
       popUpNewCardForm = popUpNewCard.querySelector('.popup-add__form'),
       newCardName = popUpNewCardForm.querySelector('.popup-add__input_type_name'),
       newCardImage = popUpNewCardForm.querySelector('.popup-add__input_type_description');
+//Create new card popup
 
-const popUpImage = document.querySelector('.popup-image'),
+//Open card image popup
+const popUpImage = document.querySelector('#popup-image'),
       popUpImageCloseButton = popUpImage.querySelector('.popup-image__close-button'),
       popUpImagePicture = popUpImage.querySelector('.popup-image__image'),
       popUpImageCaption = popUpImage.querySelector('.popup-image__caption');
+//Open card image popup
 
+const 
+       pageTemplate = document.querySelector('.template'),
+       cardList = document.querySelector('.cards__list');
+
+//Отрытие/закрытие попапов
+function openPopUp(popup) {
+  popup.classList.add('popup_opened');
+}
+
+function closePopUp(popup) {
+  popup.classList.remove('popup_opened');
+}
+//Отрытие/закрытие попапов
+
+
+//Pop-up profile
+popUpProfilOpenButton.addEventListener('click', function() {
+  popUpProfileEditName.value = profileName.textContent;
+  popUpProfileEditDescription.value = profileDescription.textContent;
+  openPopUp(popUpProfile);
+});
+
+popUpProfileCloseButton.addEventListener('click', function() {
+  closePopUp(popUpProfile);
+});
+
+
+popUpNewCardButton.addEventListener('click', function() {
+  popUpNewCardForm.reset();
+  openPopUp(popUpNewCard);
+});
+
+popUpNewCardCloseButton.addEventListener('click', function() {
+  closePopUp(popUpNewCard);
+});
+
+popUpImageCloseButton.addEventListener('click', function() {
+  closePopUp(popUpImage);
+
+  popUpImageCloseButton.classList.add('popup-image__close-button-inactive');
+}); 
 
 //Функции - навешиватели прослушивания
 function addLikeListener(likeButton) {               //лайк карточки
@@ -41,121 +86,84 @@ function addTrashListener(trashButton) {            //удаление по кн
 
 function addOpenImagePopUp(imageElement) {        //открытие поп-апа с картинкой при клике 
   imageElement.addEventListener('click', function(evt) {
+    popUpImagePicture.src = "";
     popUpImagePicture.src = evt.target.src;
     popUpImagePicture.alt = evt.target.alt;
-    popUpImage.classList.add('popup-image_opened');
-    popUpImageCloseButton.classList.remove('popup-image__close-button-inactive');
-    console.log(evt.target.alt);
     popUpImageCaption.textContent = evt.target.alt;
-  }); 
-};
 
-function addCloseImagePopUp(closeButton) {        //закрытие поп-апа
-  closeButton.addEventListener('click', function() {
-    popUpImagePicture.src = "";
-    popUpImage.classList.remove('popup-image_opened');
-    popUpImageCloseButton.classList.add('popup-image__close-button-inactive');
+    openPopUp(popUpImage);
+
+    popUpImageCloseButton.classList.remove('popup-image__close-button-inactive');    
   }); 
 };
 //Функции - навешиватели прослушивания
 
+
 //Объединяем прослушиватели в одну функцию
-function addEventListeners(trashButton, likeButton, imageElement, closeButton) {
+function addCardEventListeners(trashButton, likeButton, imageElement) {
 
   addTrashListener(trashButton);
   addLikeListener(likeButton);
   addOpenImagePopUp(imageElement); 
-  addCloseImagePopUp(closeButton); 
-
 };
 //Объединяем прослушиватели в одну функцию
 
-//Рендер карточек из массива
-initialCards.forEach(function(item) {
+
+//Создание ноды карточки из темплейта
+function createCard(cardName, cardSrc) {
   const cloneTemplate = pageTemplate.content.cloneNode(true);
   const cardTitle = cloneTemplate.querySelector('.card__name');
   const cardImage = cloneTemplate.querySelector('.card__image');
   const cardLike = cloneTemplate.querySelector('.card__like');
-  const cardTrash = cloneTemplate.querySelector('.card__trash-button');  
-  
-  cardImage.setAttribute('src', item.link);
-  cardImage.alt = item.name;
-  cardTitle.textContent = item.name;
-  
-  addEventListeners(cardTrash, cardLike, cardImage, popUpImageCloseButton);
+  const cardTrash = cloneTemplate.querySelector('.card__trash-button'); 
 
-  cardList.prepend(cloneTemplate);  
+  cardImage.setAttribute('src', cardSrc);
+  cardImage.alt = cardName;
+  cardTitle.textContent = cardName;
+
+  addCardEventListeners(cardTrash, cardLike, cardImage);
+
+  return cloneTemplate;
+};
+//Создание ноды карточки из темплейта
+
+
+function renderCard(container, card) {
+  container.prepend(card);
+}
+
+
+//Рендер карточек из массива
+initialCards.forEach(function(item) {
+  
+  const card = createCard(item.name, item.link);
+
+  renderCard(cardList, card); 
 });
 //Рендер карточек из массива
 
 
-//Profile popup
-function popUpOpen() {  
-  popUpProfileEditName.value = profileName.textContent;
-  popUpProfileEditDescription.value = profileDescription.textContent;
-
-  popUp.classList.add('popup_opened');
-}
-
-function closePopUp() {
-  popUp.classList.remove('popup_opened');
-} 
-
-popUpProfilOpenButton.addEventListener('click', popUpOpen);
-popUpCloseButton.addEventListener('click', closePopUp);
-//Profile popup
-
-//Add Card popup
-function clear() {            //стераем предыдущее значение переменных перед открытием
-  addCardName.value = "";
-  addCardImage.value = "";
-}
-
-function popUpAddOpen() {
-  clear();
-  popUpNewCard.classList.add('popup_opened');
-}
-
-function closePopUpAdd() {
-  popUpNewCard.classList.remove('popup_opened');
-}
-
-popUpNewCardButton.addEventListener('click', popUpAddOpen);
-//Add Card popup
-
-function formSubmitHandler (evt) {  
+function formProfileSubmitHandler (evt) {  
   evt.preventDefault(); 
 
   profileName.textContent = popUpProfileEditName.value;
   profileDescription.textContent = popUpProfileEditDescription.value;
   
-  closePopUp();
-
+  closePopUp(popUpProfile);
 };
 
 //Рендер Новых карт
 function renderNewCard (evt) {  
   evt.preventDefault(); 
 
-  const cloneTemplate = pageTemplate.content.cloneNode(true);
-  const cardTitle = cloneTemplate.querySelector('.card__name');
-  const cardImage = cloneTemplate.querySelector('.card__image');
-  const cardLike = cloneTemplate.querySelector('.card__like');
-  const cardTrash = cloneTemplate.querySelector('.card__trash-button');
+  const card = createCard(newCardName.value, newCardImage.value);
 
-  cardImage.setAttribute('src', newCardImage.value);
-  cardTitle.textContent = newCardName.value;
-  cardImage.setAttribute('alt', newCardImage.value);
+  renderCard(cardList, card);   
 
-  addEventListeners(cardTrash, cardLike, cardImage, popUpImageCloseButton);
-  
-  cardList.prepend(cloneTemplate);  
-  
-  closePopUpAdd();
-
+  closePopUp(popUpNewCard);
 }
 //Рендер Новых карт
 
-popUpForm.addEventListener('submit', formSubmitHandler); 
+popUpProfileForm.addEventListener('submit', formProfileSubmitHandler); 
 
 popUpNewCardForm.addEventListener('submit', renderNewCard);
