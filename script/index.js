@@ -14,10 +14,10 @@ const popUpProfilOpenButton = document.querySelector('.profile__edit-button'),
 //Create new card popup
 const popUpNewCardButton = document.querySelector('.profile__add-button'),      
       popUpNewCard = document.querySelector('#popup-new-card'),
-      popUpNewCardCloseButton = popUpNewCard.querySelector('.popup-add__close-button'),
-      popUpNewCardForm = popUpNewCard.querySelector('.popup-add__form'),
-      newCardName = popUpNewCardForm.querySelector('.popup-add__input_type_name'),
-      newCardImage = popUpNewCardForm.querySelector('.popup-add__input_type_description');
+      popUpNewCardCloseButton = popUpNewCard.querySelector('.popup__close-button'),
+      popUpNewCardForm = popUpNewCard.querySelector('#popup-add'),
+      newCardName = popUpNewCardForm.querySelector('.popup__input_type_name'),
+      newCardImage = popUpNewCardForm.querySelector('.popup__input_type_description');
 //Create new card popup
 
 //Open card image popup
@@ -31,13 +31,24 @@ const
        pageTemplate = document.querySelector('.template'),
        cardList = document.querySelector('.cards__list');
 
+
+function closeOnEscKey(evt) {
+  const visiblePopUp = document.querySelector('.popup_opened');
+ 
+  if (evt.key == 'Escape') {
+    closePopUp(visiblePopUp);
+  }
+ };
+
 //Отрытие/закрытие попапов
 function openPopUp(popup) {
   popup.classList.add('popup_opened');
+  document.addEventListener('keydown', closeOnEscKey);
 }
 
 function closePopUp(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closeOnEscKey);
 }
 //Отрытие/закрытие попапов
 
@@ -52,7 +63,6 @@ popUpProfilOpenButton.addEventListener('click', function() {
 popUpProfileCloseButton.addEventListener('click', function() {
   closePopUp(popUpProfile);
 });
-
 
 popUpNewCardButton.addEventListener('click', function() {
   popUpNewCardForm.reset();
@@ -76,6 +86,27 @@ function addLikeListener(likeButton) {               //лайк карточки
   });
 };
 
+function closeOnOverlay(popUp) {
+  const popUpContainer = popUp.querySelector('.popup__container');
+  popUp.addEventListener('click', (evt) => {
+    const isModuleWindow = evt.composedPath().includes(popUpContainer); //если в пути ивента нет контейнера, то закрываем попап
+
+      if(!isModuleWindow) {
+        closePopUp(popUp);
+      }
+  });
+}
+
+function addPopUpEventListener() {
+  const popUpList = Array.from(document.querySelectorAll('.popup'));
+
+  popUpList.forEach((popUp) => { 
+    popUp.addEventListener('click', closeOnOverlay(popUp));
+  });
+}
+
+addPopUpEventListener();
+ 
 function addTrashListener(trashButton) {            //удаление по кнопке
   trashButton.addEventListener('click', function() {
     const listItem = trashButton.closest('.card');

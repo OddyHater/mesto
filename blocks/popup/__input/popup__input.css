@@ -5,24 +5,25 @@
   outline: none;
   font-family: inherit;
   font-size: 14px;
+  margin-bottom: 5px;
 }
 
 .popup__input:first-child {
-  margin-bottom: 29px;
+  margin-bottom: 5px;
 }
 
 .popup__input:nth-child(2) {
-  margin-bottom: 48px;
+  margin-bottom: 5px;
 }
 
 @media screen and (max-width: 426px) {
   .popup__input:first-child {
-    margin-bottom: 35px;
+    margin-bottom: 5px;
   }
 }
 
 @media screen and (max-width: 426px) {
   .popup__input:nth-child(2) {
-    margin-bottom: 43px;
+    margin-bottom: 5px;
   }
 }

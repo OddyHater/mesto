@@ -37,26 +37,30 @@
     <div class="popup__container">
       <h2 class="popup__title">Редактировать профиль</h2>
       <form name="edit-profile" class="popup__form" novalidate>
-        <input type="text" name="user-name" class="popup__input popup__input_type_name" placeholder="Имя" required minlength="2" maxlength="40">
-        <input type="text" name="user-description" class="popup__input popup__input_type_description" placeholder="О себе" required minlength="2" maxlength="200">
+        <input type="text" name="user-name" class="popup__input popup__input_type_name" id="profile-name" placeholder="Имя" required minlength="2" maxlength="40">
+        <span class="profile-name-error">123</span>
+        <input type="text" name="user-description" class="popup__input popup__input_type_description" id="profile-email" placeholder="О себе" required minlength="2" maxlength="200">
+        <span class="profile-email-error"></span>
         <input type="submit" value="Сохранить" class="popup__submit">
       </form>
       <button type="button" aria-label="Закрыть" class="popup__close-button clickable"></button>
     </div>
   </div>
-  <div class="popup-add" id="popup-new-card">
-    <div class="popup-add__container">
-      <h2 class="popup-add__title">Новое место</h2>
-      <form name="add-card" class="popup-add__form">
-        <input type="text" name="card-name" class="popup-add__input popup-add__input_type_name" placeholder="Название" required>
-        <input type="text" name="card-image" class="popup-add__input popup-add__input_type_description" placeholder="Ссылка на картинку">
-        <input type="submit" value="Создать" class="popup-add__submit">
+  <div class="popup" id="popup-new-card">
+    <div class="popup__container">
+      <h2 class="popup__title">Новое место</h2>
+      <form name="add-card" class="popup__form" id="popup-add" novalidate>
+        <input type="text" name="card-name" class="popup__input popup__input_type_name" placeholder="Название" required minlength="2" maxlength="30" id="card-name">
+        <span class="card-name-error"></span>
+        <input type="url" name="card-image" class="popup__input popup__input_type_description" placeholder="Ссылка на картинку" required id="card-url">
+        <span class="card-url-error"></span>
+        <input type="submit" value="Создать" class="popup__submit popup__submit_inactive" disabled>
       </form>
-      <button type="button" aria-label="Закрыть" class="popup-add__close-button clickable"></button>
+      <button type="button" aria-label="Закрыть" class="popup__close-button clickable"></button>
     </div>
   </div>
-  <div class="popup-image" id="popup-image">
-    <div class="popup-image__container">
+  <div class="popup popup-image" id="popup-image">
+    <div class="popup-image__container popup__container">
       <figure class="popup-image__picture-set">
         <img src="#" alt=" " class="popup-image__image"> 
         <figcaption class="popup-image__caption"></figcaption>
