@@ -16,6 +16,7 @@ const popUpNewCardButton = document.querySelector('.profile__add-button'),
       popUpNewCard = document.querySelector('#popup-new-card'),
       popUpNewCardCloseButton = popUpNewCard.querySelector('.popup__close-button'),
       popUpNewCardForm = popUpNewCard.querySelector('#popup-add'),
+      popUpNewCardSubmitButton = popUpNewCardForm.querySelector('.popup__submit'),
       newCardName = popUpNewCardForm.querySelector('.popup__input_type_name'),
       newCardImage = popUpNewCardForm.querySelector('.popup__input_type_description');
 //Create new card popup
@@ -29,13 +30,15 @@ const popUpImage = document.querySelector('#popup-image'),
 
 const 
        pageTemplate = document.querySelector('.template'),
-       cardList = document.querySelector('.cards__list');
+       cardsContainer = document.querySelector('.cards__list');
 
 
 function closeOnEscKey(evt) {
-  const visiblePopUp = document.querySelector('.popup_opened');
+  
  
   if (evt.key == 'Escape') {
+    const visiblePopUp = document.querySelector('.popup_opened');
+
     closePopUp(visiblePopUp);
   }
  };
@@ -52,6 +55,7 @@ function closePopUp(popup) {
 }
 //Отрытие/закрытие попапов
 
+console.log(popUpNewCardSubmitButton);
 
 //Pop-up profile
 popUpProfilOpenButton.addEventListener('click', function() {
@@ -66,6 +70,8 @@ popUpProfileCloseButton.addEventListener('click', function() {
 
 popUpNewCardButton.addEventListener('click', function() {
   popUpNewCardForm.reset();
+  popUpNewCardSubmitButton.classList.add('popup__submit_inactive');
+  popUpNewCardSubmitButton.setAttribute('disabled', true);
   openPopUp(popUpNewCard);
 });
 
@@ -75,9 +81,7 @@ popUpNewCardCloseButton.addEventListener('click', function() {
 
 popUpImageCloseButton.addEventListener('click', function() {
   closePopUp(popUpImage);
-
-  popUpImageCloseButton.classList.add('popup-image__close-button-inactive');
-}); 
+});
 
 //Функции - навешиватели прослушивания
 function addLikeListener(likeButton) {               //лайк карточки
@@ -169,7 +173,7 @@ initialCards.forEach(function(item) {
   
   const card = createCard(item.name, item.link);
 
-  renderCard(cardList, card); 
+  renderCard(cardsContainer, card); 
 });
 //Рендер карточек из массива
 
@@ -189,7 +193,7 @@ function renderNewCard (evt) {
 
   const card = createCard(newCardName.value, newCardImage.value);
 
-  renderCard(cardList, card);   
+  renderCard(cardsContainer, card);   
 
   closePopUp(popUpNewCard);
 }
