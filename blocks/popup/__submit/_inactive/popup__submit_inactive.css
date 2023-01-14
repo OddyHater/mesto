@@ -3,4 +3,9 @@
     border: 1px #000 solid;
     color: #000;
     opacity: .2;
+    cursor: not-allowed;
+}
+
+.popup__submit_inactive:hover {
+    opacity: .2;
 }
