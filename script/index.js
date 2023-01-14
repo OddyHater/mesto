@@ -70,11 +70,6 @@ popUpNewCardButton.addEventListener('click', function() {
   openPopUp(popUpNewCard);
 });
 
-//Функции - навешиватели прослушивания
-function addLikeListener(likeButton) {               //лайк карточки  
-  likeButton.classList.toggle('like_active');
-};
-
 function addPopUpEventListener() {
   const popUpList = Array.from(document.querySelectorAll('.popup'));
 
@@ -88,7 +83,11 @@ function addPopUpEventListener() {
 }
 
 addPopUpEventListener();
- 
+
+function addLikeListener(likeButton) {               //лайк карточки  
+  likeButton.classList.toggle('like_active');
+};
+
 function addTrashListener(trashButton) {            //удаление по кнопке  
   const listItem = trashButton.closest('.card');
 
@@ -116,18 +115,18 @@ function addCardEventListeners(trashButton, likeButton, imageElement, cardData) 
 
 
 //Создание ноды карточки из темплейта
-function createCard(item) {
+function createCard(cardItem) {
   const cloneTemplate = pageTemplate.content.cloneNode(true);
   const cardTitle = cloneTemplate.querySelector('.card__name');
   const cardImage = cloneTemplate.querySelector('.card__image');
   const cardLike = cloneTemplate.querySelector('.card__like');
   const cardTrash = cloneTemplate.querySelector('.card__trash-button');
 
-  cardImage.setAttribute('src', item.link);
-  cardImage.alt = item.name;
-  cardTitle.textContent = item.name;
+  cardImage.setAttribute('src', cardItem.link);
+  cardImage.alt = cardItem.name;
+  cardTitle.textContent = cardItem.name;
 
-  const cardData = {name: item.name, link: item.link};
+  const cardData = {name: cardItem.name, link: cardItem.link};
 
   addCardEventListeners(cardTrash, cardLike, cardImage, cardData);
 
@@ -135,21 +134,18 @@ function createCard(item) {
 };
 //Создание ноды карточки из темплейта
 
-
 function renderCard(container, card) {
   container.prepend(card);
 }
 
-
 //Рендер карточек из массива
-initialCards.forEach(function(item) {
+initialCards.forEach(function(cardItem) {
   
-  const card = createCard(item);
+  const card = createCard(cardItem);
 
   renderCard(cardsContainer, card); 
 });
 //Рендер карточек из массива
-
 
 function formProfileSubmitHandler (evt) {  
   evt.preventDefault(); 
