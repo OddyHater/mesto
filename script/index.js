@@ -172,3 +172,5 @@ function renderNewCard (evt) {
 popUpProfileForm.addEventListener('submit', formProfileSubmitHandler); 
 
 popUpNewCardForm.addEventListener('submit', renderNewCard);
+
+export { popUpImage, popUpImagePicture, popUpImageCaption };
