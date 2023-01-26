@@ -66,4 +66,4 @@ enableValidation({
   inactiveButtonClass: 'popup__submit_inactive',
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'profile-name-error_active'
-}); 
+});

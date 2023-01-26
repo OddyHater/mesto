@@ -50,7 +50,7 @@
     <div class="popup__container">
       <h2 class="popup__title">Новое место</h2>
       <form name="add-card" class="popup__form" id="popup-add" novalidate>
-        <input type="text" name="card-name" class="popup__input popup__input_type_name" placeholder="Название" required minlength="2" maxlength="30" id="card-name">
+        <input type="text" name="card-name" class="popup__input popup__input_type_name" id="card-name" placeholder="Название" required minlength="2" maxlength="30">
         <span class="card-name-error"></span>
         <input type="url" name="card-image" class="popup__input popup__input_type_description" placeholder="Ссылка на картинку" required id="card-url">
         <span class="card-url-error"></span>
@@ -79,8 +79,8 @@
     </li>
   </template>
   <script type="module" src="./script/cards.js"></script>
-  <script type="module" src="./script/index.js"></script>
-  <script type="module" src="./script/validate1.js"></script>
+  <script type="module" src="./script/index.js"></script>  
   <script type="module" src="./script/Card.js"></script>
+  <script type="module" src="./script/Validate.js"></script>
 </body>
 </html>
