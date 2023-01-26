@@ -1,5 +1,14 @@
 import {Card} from './Card.js';
+import { FormValidator } from './validate.js';
 
+const values = { 
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__submit',
+  inactiveButtonClass: 'popup__submit_inactive',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'profile-name-error_active'
+}
 //Profile popup
 const popUpProfilOpenButton = document.querySelector('.profile__edit-button'),
       popUpProfile = document.querySelector('#popup-profile'),
@@ -102,3 +111,11 @@ function renderNewCard (evt) {
 popUpProfileForm.addEventListener('submit', formProfileSubmitHandler); 
 
 popUpNewCardForm.addEventListener('submit', renderNewCard);
+
+
+//подключение валидации
+document.querySelectorAll('.popup__form').forEach(form => {
+  form = new FormValidator(values, '.popup__form');
+
+  form.enableValidation(values);
+});

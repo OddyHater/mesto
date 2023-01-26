@@ -1,4 +1,4 @@
-import { initialCards } from "./cards.js";
+import { initialCards } from "./initalCards.js";
 
 const popUpImage = document.querySelector('#popup-image'),
       popUpImagePicture = popUpImage.querySelector('.popup-image__image'),
