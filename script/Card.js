@@ -7,14 +7,17 @@ const popUpImage = document.querySelector('#popup-image'),
 class Card {
   constructor(data, templateSelector) {
     this._name = data.name;
-    this._image = data.link;
+    this._imageLink = data.link;
     this._templateSelector = templateSelector;
   };
 
   _getTemplate() {
     const cardTemplate = document
       .querySelector(`${this._templateSelector}`)
-      .content.cloneNode(true);
+      .content
+      .querySelector('.card')
+      .cloneNode(true);
+
     return cardTemplate;
   };
 
@@ -39,7 +42,7 @@ class Card {
     this._picture = template.querySelector('.card__image');
 
     this._picture.addEventListener('click', () => {
-      popUpImagePicture.src = this._image;
+      popUpImagePicture.src = this._imageLink;
       popUpImagePicture.alt = this._name;
       popUpImageCaption.textContent = this._name;
       popUpImage.classList.add('popup_opened');  
@@ -48,7 +51,7 @@ class Card {
   };
 
   generateCard() {
-    this._template = this._getTemplate().querySelector('.card');
+    this._template = this._getTemplate();
     this._cardTitle = this._template.querySelector('.card__name');
     this._cardImage = this._template.querySelector('.card__image');
 
@@ -58,7 +61,7 @@ class Card {
 
     this._cardTitle.textContent = this._name;
     this._cardImage.alt = this._name;
-    this._cardImage.src = this._image;
+    this._cardImage.src = this._imageLink;
 
     return this._template;
   };

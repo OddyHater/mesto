@@ -5,8 +5,13 @@
 * Pixel perfect адаптивная верстка по макету Figma.
 * Реализован Pop-up с возможностью редактировать содержимое страницы. 
 * Grid, flex layouts, оптимизация и сжатие изображений. 
+* Генерация карточек из массива с объектами с применением ООП.
+* Валидация форм, с применением ООП.
+* Продуманный процесс валидации: кнопки недоступны при невалидном поле формы, что улучшает UX.
+* Использованы js модули.
+* Организация структуры - BEM Nested.
 ---
 
-* [Ссылка на макет в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
+* [Ссылка на макет в Figma](https://www.figma.com/file/kRVLKwYG3d1HGLvh7JFWRT/JavaScript.-Sprint-6?node-id=0%3A1&t=dzCh6cqg4Xp6dPiQ-0)
 
 * [Ссылка на GitHub Pages](https://oddyhater.github.io/mesto/)

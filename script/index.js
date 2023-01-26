@@ -1,7 +1,7 @@
 import {Card} from './Card.js';
 import { FormValidator } from './Validate.js';
 
-const values = { 
+const validationSettings = { 
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__submit',
@@ -27,7 +27,7 @@ const popUpNewCardButton = document.querySelector('.profile__add-button'),
       newCardName = popUpNewCardForm.querySelector('.popup__input_type_name'),
       newCardImage = popUpNewCardForm.querySelector('.popup__input_type_description');
 //Create new card popup
-
+const cardList = document.querySelector('.cards__list');
 
 const buttonCloseList = document.querySelectorAll('.popup__close-button'); 
 
@@ -102,7 +102,7 @@ function renderNewCard (evt) {
   const newCardItem = new Card({name: newCardName.value, link: newCardImage.value}, '.template');  
   const preparedCard = newCardItem.generateCard();
 
-  document.querySelector('.cards__list').prepend(preparedCard);
+  cardList.prepend(preparedCard);
 
   closePopUp(popUpNewCard);
 }
@@ -115,7 +115,7 @@ popUpNewCardForm.addEventListener('submit', renderNewCard);
 
 //подключение валидации
 document.querySelectorAll('.popup__form').forEach(form => {
-  form = new FormValidator(values, '.popup__form');
+  const validator = new FormValidator(validationSettings, '.popup__form');
 
-  form.enableValidation(values);
+  validator.enableValidation(validationSettings);
 });
