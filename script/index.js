@@ -19,6 +19,10 @@ const popUpProfilOpenButton = document.querySelector('.profile__edit-button'),
       profileDescription = document.querySelector('.profile__description');
 //Profile popup     
 
+const popUpImage = document.querySelector('#popup-image'),
+      popUpImagePicture = popUpImage.querySelector('.popup-image__image'),
+      popUpImageCaption = popUpImage.querySelector('.popup-image__caption');
+
 //Create new card popup
 const popUpNewCardButton = document.querySelector('.profile__add-button'),      
       popUpNewCard = document.querySelector('#popup-new-card'),
@@ -31,6 +35,9 @@ const cardList = document.querySelector('.cards__list');
 
 const buttonCloseList = document.querySelectorAll('.popup__close-button'); 
 
+function handleOpenPopup(name, link) {
+  
+}
 
 function closeOnEscKey(evt) { 
   if (evt.key == 'Escape') {
@@ -67,8 +74,7 @@ popUpProfilOpenButton.addEventListener('click', function() {
 
 popUpNewCardButton.addEventListener('click', function() {
   popUpNewCardForm.reset();
-  popUpNewCardSubmitButton.classList.add('popup__submit_inactive');
-  popUpNewCardSubmitButton.setAttribute('disabled', true);
+  validators.get(popUpNewCardForm.name).disableSubmitButton()
   openPopUp(popUpNewCard);
 });
 
@@ -113,9 +119,13 @@ popUpProfileForm.addEventListener('submit', formProfileSubmitHandler);
 popUpNewCardForm.addEventListener('submit', renderNewCard);
 
 
-//подключение валидации
-document.querySelectorAll('.popup__form').forEach(form => {
-  const validator = new FormValidator(validationSettings, '.popup__form');
+const validators = new Map();
 
-  validator.enableValidation(validationSettings);
+//подключение валидации
+const formList = Array.from(document.querySelectorAll('.popup__form'));
+
+formList.forEach((form) => {
+  const validator = new FormValidator(validationSettings, form);
+  validators.set(form.name, validator);  
+  validator.enableValidation();
 });

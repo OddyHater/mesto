@@ -1,12 +1,9 @@
 import { initialCards } from "./initalCards.js";
 
-const popUpImage = document.querySelector('#popup-image'),
-      popUpImagePicture = popUpImage.querySelector('.popup-image__image'),
-      popUpImageCaption = popUpImage.querySelector('.popup-image__caption');
-
 class Card {
-  constructor(data, templateSelector) {
+  constructor(data, templateSelector, handleOpenPopup) {
     this._name = data.name;
+    this._handleOpenPopup = handleOpenPopup;
     this._imageLink = data.link;
     this._templateSelector = templateSelector;
   };
