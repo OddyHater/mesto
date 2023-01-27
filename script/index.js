@@ -1,5 +1,6 @@
 import {Card} from './Card.js';
 import { FormValidator } from './Validate.js';
+import { initialCards } from './initalCards.js';
 
 const validationSettings = { 
   formSelector: '.popup__form',
@@ -27,7 +28,6 @@ const popUpImage = document.querySelector('#popup-image'),
 const popUpNewCardButton = document.querySelector('.profile__add-button'),      
       popUpNewCard = document.querySelector('#popup-new-card'),
       popUpNewCardForm = popUpNewCard.querySelector('#popup-add'),
-      popUpNewCardSubmitButton = popUpNewCardForm.querySelector('.popup__submit'),
       newCardName = popUpNewCardForm.querySelector('.popup__input_type_name'),
       newCardImage = popUpNewCardForm.querySelector('.popup__input_type_description');
 //Create new card popup
@@ -35,9 +35,7 @@ const cardList = document.querySelector('.cards__list');
 
 const buttonCloseList = document.querySelectorAll('.popup__close-button'); 
 
-function handleOpenPopup(name, link) {
-  
-}
+
 
 function closeOnEscKey(evt) { 
   if (evt.key == 'Escape') {
@@ -59,6 +57,15 @@ function closePopUp(popup) {
 }
 //Отрытие/закрытие попапов
 
+function handleOpenPopup(name, link) {
+  popUpImagePicture.src = link;
+  popUpImagePicture.alt = name;
+  popUpImageCaption.textContent = name;
+  
+  openPopUp(popUpImage);
+}
+
+
 buttonCloseList.forEach((button) => {
   const popUp = button.closest('.popup');
 
@@ -74,7 +81,7 @@ popUpProfilOpenButton.addEventListener('click', function() {
 
 popUpNewCardButton.addEventListener('click', function() {
   popUpNewCardForm.reset();
-  validators.get(popUpNewCardForm.name).disableSubmitButton()
+  validators.get(popUpNewCardForm.name).disableSubmitButton();
   openPopUp(popUpNewCard);
 });
 
@@ -105,7 +112,7 @@ function formProfileSubmitHandler (evt) {
 function renderNewCard (evt) {  
   evt.preventDefault(); 
 
-  const newCardItem = new Card({name: newCardName.value, link: newCardImage.value}, '.template');  
+  const newCardItem = new Card({name: newCardName.value, link: newCardImage.value}, '.template', handleOpenPopup);  
   const preparedCard = newCardItem.generateCard();
 
   cardList.prepend(preparedCard);
@@ -119,6 +126,15 @@ popUpProfileForm.addEventListener('submit', formProfileSubmitHandler);
 popUpNewCardForm.addEventListener('submit', renderNewCard);
 
 
+//отрисовка карточек из массива
+initialCards.forEach((item) => {
+  const card = new Card(item, '.template', handleOpenPopup);
+  const preparedCard = card.generateCard();
+
+  document.querySelector('.cards__list').append(preparedCard);
+});
+
+
 const validators = new Map();
 
 //подключение валидации
@@ -126,6 +142,6 @@ const formList = Array.from(document.querySelectorAll('.popup__form'));
 
 formList.forEach((form) => {
   const validator = new FormValidator(validationSettings, form);
-  validators.set(form.name, validator);  
-  validator.enableValidation();
+  validators.set(form.name, validator);
+  validator.enableValidation();  
 });
