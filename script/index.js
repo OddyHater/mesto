@@ -1,5 +1,5 @@
 import {Card} from './Card.js';
-import { FormValidator } from './validate.js';
+import { FormValidator } from './Validate.js';
 import { initialCards } from './initalCards.js';
 
 const validationSettings = { 
@@ -108,19 +108,16 @@ function formProfileSubmitHandler (evt) {
   closePopUp(popUpProfile);
 };
 
-function createCard(cardTemplate) {
-  const preparedCard = cardTemplate.generateCard();
-
-  return preparedCard;
+function createCard(cardData) {
+  const card = new Card (cardData, '.template', handleOpenPopup);
+  return card.generateCard();
 }
 
 //Рендер Новых карт
 function renderNewCard (evt) {  
-  evt.preventDefault(); 
-
-  const newCardItem = new Card({name: newCardName.value, link: newCardImage.value}, '.template', handleOpenPopup);  
+  evt.preventDefault();  
   
-  cardList.prepend(createCard(newCardItem));
+  cardList.prepend(createCard({name: newCardName.value, link: newCardImage.value}));
   closePopUp(popUpNewCard);
 };
 //Рендер Новых карт
@@ -131,9 +128,7 @@ popUpNewCardForm.addEventListener('submit', renderNewCard);
 
 //отрисовка карточек из массива
 initialCards.forEach((item) => {
-  const card = new Card(item, '.template', handleOpenPopup);
-
-  document.querySelector('.cards__list').append(createCard(card));
+  cardList.append(createCard(item));
 });
 
 const validators = new Map();
