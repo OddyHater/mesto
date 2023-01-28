@@ -3,7 +3,7 @@ class Card {
     this._name = data.name;
     this._imageLink = data.link;
     this._templateSelector = templateSelector;
-    this.handleOpenPopup = handleOpenPopup;
+    this._handleOpenPopup = handleOpenPopup;
   };
 
   _getTemplate() {
@@ -42,7 +42,7 @@ class Card {
 
   _addOpenImagePopupListener() {
     this._cardImage.addEventListener('click', () => {
-      this.handleOpenPopup(this._name, this._imageLink);
+      this._handleOpenPopup(this._name, this._imageLink);
     });  
   };
 
