@@ -59,6 +59,8 @@ class Card {
     this._cardImage.alt = this._name;
     this._cardImage.src = this._imageLink;
 
+    console.log(this._cardElement);
+
     return this._cardElement;
   };
 }

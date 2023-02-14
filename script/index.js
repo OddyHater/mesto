@@ -1,6 +1,7 @@
 import {Card} from './Card.js';
 import { FormValidator } from './Validate.js';
 import { initialCards } from './initalCards.js';
+import { Section } from './Section.js';
 
 const validationSettings = { 
   formSelector: '.popup__form',
@@ -114,8 +115,8 @@ function createCard(cardData) {
 }
 
 //Рендер Новых карт
-function renderNewCard (evt) {  
-  evt.preventDefault();  
+function renderNewCard (evt) {
+  evt.preventDefault();
   
   cardList.prepend(createCard({name: newCardName.value, link: newCardImage.value}));
   closePopUp(popUpNewCard);
@@ -126,14 +127,9 @@ popUpProfileForm.addEventListener('submit', formProfileSubmitHandler);
 
 popUpNewCardForm.addEventListener('submit', renderNewCard);
 
-//отрисовка карточек из массива
-initialCards.forEach((item) => {
-  cardList.append(createCard(item));
-});
-
-const validators = new Map();
 
 //подключение валидации
+const validators = new Map();
 const formList = Array.from(document.querySelectorAll('.popup__form'));
 
 formList.forEach((form) => {
@@ -141,3 +137,15 @@ formList.forEach((form) => {
   validators.set(form.name, validator);
   validator.enableValidation();  
 });
+
+const elementList = new Section({
+  items: initialCards.map(element => {
+    const cardArray = createCard(element);
+    return cardArray;
+  }),
+  renderer: (element, nodeSelector) => {
+    nodeSelector.append(element);
+  }
+}, '.cards__list');
+
+elementList.addItem();
