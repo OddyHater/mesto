@@ -23,10 +23,6 @@ const popUpProfilOpenButton = document.querySelector('.profile__edit-button'),
       profileDescription = document.querySelector('.profile__description');
 //Profile popup     
 
-const popUpImage = document.querySelector('#popup-image'),
-      popUpImagePicture = popUpImage.querySelector('.popup-image__image'),
-      popUpImageCaption = popUpImage.querySelector('.popup-image__caption');
-
 //Create new card popup
 const popUpNewCardButton = document.querySelector('.profile__add-button'),
       popUpNewCard = document.querySelector('#popup-new-card'),
@@ -145,3 +141,4 @@ const elementList = new Section({
 }, '.cards__list');
 
 elementList.addItem();
+
