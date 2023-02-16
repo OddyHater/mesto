@@ -1,4 +1,4 @@
-export default class Popup {
+export class Popup {
     constructor(popupSelector) {
         this._popup = document.querySelector(popupSelector);
     };
@@ -6,19 +6,19 @@ export default class Popup {
     //открытие попапа
     open() {
         this._popup.classList.add('popup_opened');
-        document.addEventListener('keydown', this._handleEscClose);
+        document.addEventListener('keydown', this._handleEscClose.bind(this));
     }
 
     //закрытие попапа
     close() {
         this._popup.classList.remove('popup_opened');
-        document.removeEventListener('keydown', this._handleEscClose);
+        document.removeEventListener('keydown', this._handleEscClose.bind(this));
     }
 
     //Ззакрытие на esc
     _handleEscClose(evt) {
-        if (evt.key == 'Escape') {
-            this._popup.close();
+        if (evt.key == 'Escape') {          
+          this.close();
         }
     }
 
@@ -27,7 +27,7 @@ export default class Popup {
         this._popup.addEventListener('mousedown', (evt) => {
             if(evt.target.classList.contains('popup')) {
                 this.close();
-            }
+              }
         });
     }
 }

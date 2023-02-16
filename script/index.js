@@ -1,7 +1,8 @@
-import {Card} from './Card.js';
+import { Card } from './Card.js';
 import { FormValidator } from './Validate.js';
 import { initialCards } from './initalCards.js';
 import { Section } from './Section.js';
+import { PopupWithImage } from './PopupWithImage.js';
 
 const validationSettings = { 
   formSelector: '.popup__form',
@@ -58,15 +59,6 @@ function closePopUp(popup) {
 };
 //Отрытие/закрытие попапов
 
-function handleOpenPopup(name, link) {
-  popUpImagePicture.src = link;
-  popUpImagePicture.alt = name;
-  popUpImageCaption.textContent = name;
-  
-  openPopUp(popUpImage);
-};
-
-
 buttonCloseList.forEach((button) => {
   const popUp = button.closest('.popup');
 
@@ -100,7 +92,7 @@ function addPopUpEventListener() {
 
 addPopUpEventListener();
 
-function formProfileSubmitHandler (evt) {  
+function formProfileSubmitHandler (evt) {
   evt.preventDefault(); 
 
   profileName.textContent = popUpProfileEditName.value;
@@ -110,7 +102,11 @@ function formProfileSubmitHandler (evt) {
 };
 
 function createCard(cardData) {
-  const card = new Card (cardData, '.template', handleOpenPopup);
+  const handleCardClick = (name, link) => {
+    const makeImageOpen = new PopupWithImage('.popup-image');
+    makeImageOpen.open(name, link);
+  }
+  const card = new Card (cardData, '.template', handleCardClick);
   return card.generateCard();
 }
 
