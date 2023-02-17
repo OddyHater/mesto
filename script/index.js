@@ -3,6 +3,8 @@ import { FormValidator } from './Validate.js';
 import { initialCards } from './initalCards.js';
 import { Section } from './Section.js';
 import { PopupWithImage } from './PopupWithImage.js';
+import { PopupWithForm } from './PopupWithForm.js';
+import { UserInfo } from './UserInfo.js';
 
 const validationSettings = { 
   formSelector: '.popup__form',
@@ -25,15 +27,10 @@ const popUpProfilOpenButton = document.querySelector('.profile__edit-button'),
 
 //Create new card popup
 const popUpNewCardButton = document.querySelector('.profile__add-button'),
-      popUpNewCard = document.querySelector('#popup-new-card'),
-      popUpNewCardForm = popUpNewCard.querySelector('#popup-add'),
-      newCardName = popUpNewCardForm.querySelector('.popup__input_type_name'),
-      newCardImage = popUpNewCardForm.querySelector('.popup__input_type_description');
+      cardList = document.querySelector('.cards__list');
 //Create new card popup
-const cardList = document.querySelector('.cards__list');
 
 const buttonCloseList = document.querySelectorAll('.popup__close-button'); 
-
 
 function closeOnEscKey(evt) { 
   if (evt.key == 'Escape') {
@@ -55,6 +52,17 @@ function closePopUp(popup) {
 };
 //Отрытие/закрытие попапов
 
+function popupWithFormSet() {
+  const popupWithForm = new PopupWithForm('#popup-new-card', (evt, cardToRender) => {
+    evt.preventDefault();
+
+    cardList.prepend(createCard(cardToRender));
+  });
+
+  popupWithForm.open()
+  popupWithForm.setEventListeners();
+}
+
 buttonCloseList.forEach((button) => {
   const popUp = button.closest('.popup');
 
@@ -68,11 +76,7 @@ popUpProfilOpenButton.addEventListener('click', function() {
   openPopUp(popUpProfile);
 });
 
-popUpNewCardButton.addEventListener('click', function() {
-  popUpNewCardForm.reset();
-  validators.get(popUpNewCardForm.name).disableSubmitButton();
-  openPopUp(popUpNewCard);
-});
+popUpNewCardButton.addEventListener('click', popupWithFormSet);
 
 function addPopUpEventListener() {
   const popUpList = Array.from(document.querySelectorAll('.popup'));
@@ -97,6 +101,10 @@ function formProfileSubmitHandler (evt) {
   closePopUp(popUpProfile);
 };
 
+function userInfoSet() {
+  const userInfo = new UserInfo({});
+}
+
 function createCard(cardData) {
   const handleCardClick = (name, link) => {
     const makeImageOpen = new PopupWithImage('.popup-image');
@@ -107,17 +115,10 @@ function createCard(cardData) {
 }
 
 //Рендер Новых карт
-function renderNewCard (evt) {
-  evt.preventDefault();
-  
-  cardList.prepend(createCard({name: newCardName.value, link: newCardImage.value}));
-  closePopUp(popUpNewCard);
-};
+
 //Рендер Новых карт
 
 popUpProfileForm.addEventListener('submit', formProfileSubmitHandler); 
-
-popUpNewCardForm.addEventListener('submit', renderNewCard);
 
 
 //подключение валидации
