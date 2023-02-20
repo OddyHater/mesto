@@ -8,29 +8,25 @@ export class PopupWithForm extends Popup {
     this._inputList = Array.from(this._popupForm.querySelectorAll('.popup__input'));
     this._cardName = this._popupForm.querySelector('.popup__input_type_name');
     this._cardLink = this._popupForm.querySelector('.popup__input_type_description');
-  };
+    this._closeButton = this._popup.querySelector('.popup__close-button');
+  } 
 
   close() {
     super.close();
     this._popupForm.reset();
+    this._popupForm.removeEventListener('submit', this._submitCallBack);
   }
 
   _getInputValues() {
     return {
       name: this._cardName.value,
       link: this._cardLink.value
-    }
+    };
   }
 
   setEventListeners() {
     super.setEventListeners();
 
-    
-    this._popupForm.addEventListener('submit', (evt) => {
-      this._submitCallBack(evt, this._getInputValues());
-
-      this._getInputValues();
-      this.close()
-    });
+    this._popupForm.addEventListener('submit', this._submitCallBack);
   }
 }

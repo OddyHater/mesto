@@ -53,28 +53,41 @@ function closePopUp(popup) {
 //Отрытие/закрытие попапов
 
 function popupWithFormSet() {
-  const popupWithForm = new PopupWithForm('#popup-new-card', (evt, cardToRender) => {
-    evt.preventDefault();
-
-    cardList.prepend(createCard(cardToRender));
+  const popupWithForm = new PopupWithForm('#popup-new-card', (evt) => {
+   evt.preventDefault();
+   
+   
+   cardList.prepend(createCard(popupWithForm._getInputValues()));
+   popupWithForm.close();
   });
 
-  popupWithForm.open()
   popupWithForm.setEventListeners();
+  popupWithForm.open();  
 }
 
-buttonCloseList.forEach((button) => {
-  const popUp = button.closest('.popup');
+function popupProfileSet() {
+  const inputValuesChecker = new UserInfo({
+    userNameSelector: '.profile__name', 
+    userDescriptionSelector: '.profile__description'
+  });
 
-  button.addEventListener('click', () => closePopUp(popUp));
-});
+  const formPopup = new PopupWithForm('#popup-profile', (evt, submitCallBack) => {
+    evt.preventDefault();
+
+    inputValuesChecker.setUserInfo(submitCallBack);
+  });
+
+  // inputValuesChecker.setInputValue(
+  //   popUpProfileEditName,
+  //   popUpProfileEditDescription
+  // );
+
+  formPopup.open();
+  formPopup.setEventListeners();
+}
 
 //Pop-up profile
-popUpProfilOpenButton.addEventListener('click', function() {
-  popUpProfileEditName.value = profileName.textContent;
-  popUpProfileEditDescription.value = profileDescription.textContent;
-  openPopUp(popUpProfile);
-});
+popUpProfilOpenButton.addEventListener('click', popupProfileSet);
 
 popUpNewCardButton.addEventListener('click', popupWithFormSet);
 
@@ -101,15 +114,13 @@ function formProfileSubmitHandler (evt) {
   closePopUp(popUpProfile);
 };
 
-function userInfoSet() {
-  const userInfo = new UserInfo({});
-}
-
 function createCard(cardData) {
   const handleCardClick = (name, link) => {
     const makeImageOpen = new PopupWithImage('.popup-image');
     makeImageOpen.open(name, link);
+    makeImageOpen.setEventListeners();
   }
+  
   const card = new Card (cardData, '.template', handleCardClick);
   return card.generateCard();
 }
@@ -118,9 +129,6 @@ function createCard(cardData) {
 
 //Рендер Новых карт
 
-popUpProfileForm.addEventListener('submit', formProfileSubmitHandler); 
-
-
 //подключение валидации
 const validators = new Map();
 const formList = Array.from(document.querySelectorAll('.popup__form'));
@@ -128,7 +136,7 @@ const formList = Array.from(document.querySelectorAll('.popup__form'));
 formList.forEach((form) => {
   const validator = new FormValidator(validationSettings, form);
   validators.set(form.name, validator);
-  validator.enableValidation();  
+  validator.enableValidation();
 });
 
 const elementList = new Section({

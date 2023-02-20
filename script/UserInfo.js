@@ -4,15 +4,21 @@ export class UserInfo {
     this._userDescriptionElement = document.querySelector(userDescriptionSelector);
   }
 
-  getUserInfo() {
+  getUserInfo() {   
     return {
-      userName: this._userNameElement.value,
-      userDescription: this._userDescriptionElement.value
-    }
+      userName: this._userNameElement.textContent,
+      userDescription: this._userDescriptionElement.textContent
+    };
   }
 
-  setUserInfo({newUserName, newUserDescription}) {
-    this._userNameElement.value = newUserName;
-    this._userDescriptionElement = newUserDescription;
+  setInputValue(name, link) {
+    name.value = this._userNameElement.textContent;
+    link.value = this._userDescriptionElement.textContent;
+  };
+
+  setUserInfo({name, link}) {
+    console.log(1);
+    this._userNameElement.textContent = name;
+    this._userDescriptionElement.textContent = link;
   }
 }
