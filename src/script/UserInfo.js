@@ -11,10 +11,7 @@ export class UserInfo {
     };
   }
 
-  setInputValue(name, link) {
-    name.value = this._userNameElement.textContent;
-    link.value = this._userDescriptionElement.textContent;
-  };
+  
 
   setUserInfo({name, link}) {  
     this._userNameElement.textContent = name;

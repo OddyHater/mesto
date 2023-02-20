@@ -21,6 +21,8 @@ const validationSettings = {
 //Profile popup
 const popUpProfilOpenButton = document.querySelector('.profile__edit-button'),
       popUpProfile = document.querySelector('#popup-profile'),
+      popUpName = document.querySelector('.profile__name'),
+      popUpDescription = document.querySelector('.profile__description'),
       popUpProfileEditName = popUpProfile.querySelector('.popup__input_type_name'),
       popUpProfileEditDescription = popUpProfile.querySelector('.popup__input_type_description');
 //Profile popup     
@@ -58,7 +60,7 @@ function popupProfileSet() {
     formPopup.close();
   });
 
-  inputValuesChecker.setInputValue(popUpProfileEditName, popUpProfileEditDescription); //при открытии формы значения инпутов равны описанию на странице
+  formPopup.setInputValue(popUpName, popUpDescription);
   formPopup.open();
   formPopup.setEventListeners(); //Добавляем обработчики
 }

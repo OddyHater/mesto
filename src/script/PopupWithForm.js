@@ -1,3 +1,4 @@
+import { data } from "browserslist";
 import { Popup } from "./Popup.js";
 
 export class PopupWithForm extends Popup {
@@ -18,11 +19,18 @@ export class PopupWithForm extends Popup {
   }
 
   _getInputValues() {
-    return {
-      name: this._cardName.value,
-      link: this._cardLink.value
-    };
+    let result = {};
+
+    this._inputList.forEach(inputElement => {      
+      result[inputElement.name] = inputElement.value;      
+    });
+    return result;
   }
+
+  setInputValue(name, link) {
+    this._cardName.value = name.textContent;
+    this._cardLink.value = link.textContent;
+  };
 
   setEventListeners() {
     super.setEventListeners();
