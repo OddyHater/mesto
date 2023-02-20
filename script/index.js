@@ -18,11 +18,8 @@ const validationSettings = {
 //Profile popup
 const popUpProfilOpenButton = document.querySelector('.profile__edit-button'),
       popUpProfile = document.querySelector('#popup-profile'),
-      popUpProfileForm = popUpProfile.querySelector('.popup__form'),
       popUpProfileEditName = popUpProfile.querySelector('.popup__input_type_name'),
-      popUpProfileEditDescription = popUpProfile.querySelector('.popup__input_type_description'),
-      profileName = document.querySelector('.profile__name'),
-      profileDescription = document.querySelector('.profile__description');
+      popUpProfileEditDescription = popUpProfile.querySelector('.popup__input_type_description');
 //Profile popup     
 
 //Create new card popup
@@ -30,32 +27,9 @@ const popUpNewCardButton = document.querySelector('.profile__add-button'),
       cardList = document.querySelector('.cards__list');
 //Create new card popup
 
-const buttonCloseList = document.querySelectorAll('.popup__close-button'); 
-
-function closeOnEscKey(evt) { 
-  if (evt.key == 'Escape') {
-    const visiblePopUp = document.querySelector('.popup_opened');
-
-    closePopUp(visiblePopUp);
-  }
-};
-
-//Отрытие/закрытие попапов
-function openPopUp(popup) {
-  popup.classList.add('popup_opened');
-  document.addEventListener('keydown', closeOnEscKey);
-};
-
-function closePopUp(popup) {
-  popup.classList.remove('popup_opened');
-  document.removeEventListener('keydown', closeOnEscKey);
-};
-//Отрытие/закрытие попапов
-
 function popupWithFormSet() {
   const popupWithForm = new PopupWithForm('#popup-new-card', (evt) => {
-   evt.preventDefault();
-   
+   evt.preventDefault();   
    
    cardList.prepend(createCard(popupWithForm._getInputValues()));
    popupWithForm.close();
@@ -74,14 +48,11 @@ function popupProfileSet() {
   const formPopup = new PopupWithForm('#popup-profile', (evt, submitCallBack) => {
     evt.preventDefault();
 
-    inputValuesChecker.setUserInfo(submitCallBack);
+    inputValuesChecker.setUserInfo(formPopup._getInputValues());
+    formPopup.close();
   });
 
-  // inputValuesChecker.setInputValue(
-  //   popUpProfileEditName,
-  //   popUpProfileEditDescription
-  // );
-
+  inputValuesChecker.setInputValue(popUpProfileEditName, popUpProfileEditDescription);
   formPopup.open();
   formPopup.setEventListeners();
 }
@@ -90,29 +61,6 @@ function popupProfileSet() {
 popUpProfilOpenButton.addEventListener('click', popupProfileSet);
 
 popUpNewCardButton.addEventListener('click', popupWithFormSet);
-
-function addPopUpEventListener() {
-  const popUpList = Array.from(document.querySelectorAll('.popup'));
-
-  popUpList.forEach((popUp) => { 
-    popUp.addEventListener('mousedown', (evt) => {
-      if(evt.target.classList.contains('popup')) {
-        closePopUp(popUp);
-      };
-    });
-  });
-};
-
-addPopUpEventListener();
-
-function formProfileSubmitHandler (evt) {
-  evt.preventDefault(); 
-
-  profileName.textContent = popUpProfileEditName.value;
-  profileDescription.textContent = popUpProfileEditDescription.value;
-
-  closePopUp(popUpProfile);
-};
 
 function createCard(cardData) {
   const handleCardClick = (name, link) => {
@@ -124,10 +72,6 @@ function createCard(cardData) {
   const card = new Card (cardData, '.template', handleCardClick);
   return card.generateCard();
 }
-
-//Рендер Новых карт
-
-//Рендер Новых карт
 
 //подключение валидации
 const validators = new Map();

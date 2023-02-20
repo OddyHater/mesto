@@ -16,8 +16,7 @@ export class UserInfo {
     link.value = this._userDescriptionElement.textContent;
   };
 
-  setUserInfo({name, link}) {
-    console.log(1);
+  setUserInfo({name, link}) {  
     this._userNameElement.textContent = name;
     this._userDescriptionElement.textContent = link;
   }
