@@ -22,9 +22,9 @@ class FormValidator {
     errorElement.classList.remove(this._settings.errorClass);
   };
 
-  disableSubmitButton() {  
+  disableSubmitButton() {
     this._formButton.classList.add(this._settings.inactiveButtonClass);
-    this._formButton.setAttribute('disabled', true);   
+    this._formButton.setAttribute('disabled', true);
   };
 
   _hasInvalidInput() {

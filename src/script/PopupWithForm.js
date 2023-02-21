@@ -17,7 +17,7 @@ export class PopupWithForm extends Popup {
     this._popupForm.removeEventListener('submit', this._submitCallBack); //навешиваем обработчик, приходящий из submitCallBack
   }
 
-  _getInputValues() {
+  getInputValues() {
     return {
       name: this._cardName.value,
       link: this._cardLink.value
@@ -26,7 +26,6 @@ export class PopupWithForm extends Popup {
 
   setEventListeners() {
     super.setEventListeners();
-
     this._popupForm.addEventListener('submit', this._submitCallBack);
   }
 }
