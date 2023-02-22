@@ -3,22 +3,27 @@ export class Popup {
     this._popup = document.querySelector(popupSelector);
     this._closeButton = this._popup.querySelector('.popup__close-button');
   };
-    //открытие попапа
-  open() {
-    this._popup.classList.add('popup_opened');
-    document.addEventListener('keydown', this._handleEscClose.bind(this));
-  }
-    //закрытие попапа
-  close() {
-    this._popup.classList.remove('popup_opened');
-    document.removeEventListener('keydown', this._handleEscClose.bind(this));
-  }
-    //Закрытие на esc
+  
+  //закрытие на Esc
   _handleEscClose(evt) {
     if (evt.key == 'Escape') {          
       this.close();
     }
   }
+  
+   //открытие попапа
+  open() {
+    this._popup.classList.add('popup_opened');
+    this._handleEscCloseBound = this._handleEscClose.bind(this);
+    document.addEventListener('keydown', this._handleEscCloseBound);
+  }
+    //закрытие попапа
+  close() {
+    this._popup.classList.remove('popup_opened');
+    document.removeEventListener('keydown', this._handleEscCloseBound);
+  }
+    //Закрытие на esc
+ 
     //Добавляем слушатель закрытия попапа
   setEventListeners() {
     this._popup.addEventListener('mousedown', (evt) => {

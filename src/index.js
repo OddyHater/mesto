@@ -26,16 +26,11 @@ const popUpProfilOpenButton = document.querySelector('.profile__edit-button'),
 //Profile popup     
 
 const popupNewCard = document.querySelector('#popup-new-card');
-//Create new card popup
-const popUpNewCardButton = document.querySelector('.profile__add-button'),
-      profileName = document.querySelector('.profile__name'),
-      profileDescription = document.querySelector('.profile__description'),
-      cardList = document.querySelector('.cards__list');
-//Create new card popup
+const popUpNewCardButton = document.querySelector('.profile__add-button');      
+
 
 const handleCardClick = (name, link) => {
-  imagePopup.open(name, link);
-  imagePopup.setEventListeners();
+  imagePopup.open(name, link);  
 }
 
 function createCard(cardData) {  
@@ -43,40 +38,38 @@ function createCard(cardData) {
   return card.generateCard(); //возращение разметки 
 }
 
-const cardsFromArray = new Section({ //Отрисовываем карточки из массива
-  items: initialCards.map(element => {
-    const cardArray = createCard(element);
-    return cardArray;
-  }),
-  renderer: () => {
-    cardsFromArray.renderItems();
+const cardArrayToRender = initialCards.map(element => {
+  const cardArray = createCard(element);
+  return cardArray;
+});
+
+const appender = new Section({
+  items: cardArrayToRender,
+  renderer: (element) => {
+    appender.addItem(element);
   }
 }, '.cards__list');
 
 const imagePopup = new PopupWithImage('.popup-image');
 
 const inputValuesChecker = new UserInfo({  //Следим за состоянием имени и описания профиля
-  userNameSelector: '.profile__name', 
+  userNameSelector: '.profile__name',
   userDescriptionSelector: '.profile__description'
 });
 
-const newCardPopup = new PopupWithForm('#popup-new-card', (evt) => {
-  evt.preventDefault();
-  const cardData = newCardPopup.getInputValues();  
-  const preparedCard = createCard(cardData);
-  const newCardsToAppend = new Section({}, '.cards__list')
-
-  newCardsToAppend.addItem(preparedCard);
-  newCardPopup.close();
+const newCardPopup = new PopupWithForm({ 
+  popupSelector: '#popup-new-card',
+  submitCallBack: (item) => {
+    const card = createCard(item);
+    appender.addItem(card);
+  }
 });
 
-const profilePopup = new PopupWithForm('#popup-profile', (evt) => {
-  evt.preventDefault();
-  const cardData = profilePopup.getInputValues()
-  
-  profileName.textContent = cardData.name;
-  profileDescription.textContent = cardData.link;
-  profilePopup.close();
+const profilePopup = new PopupWithForm({
+  popupSelector: '#popup-profile',
+  submitCallBack: (item) => {
+    inputValuesChecker.setUserInfo(item)
+  }
 });
 
 const addCardValidator = new FormValidator(validationSettings, popupNewCard)
@@ -85,7 +78,6 @@ const addCardValidator = new FormValidator(validationSettings, popupNewCard)
 function popupWithFormSet() {
 
   addCardValidator.disableSubmitButton();
-  newCardPopup.setEventListeners(); //Добавляем обработчики
   newCardPopup.open();
 }
 // форма добавления новых карточек
@@ -93,21 +85,19 @@ function popupWithFormSet() {
 // форма профиля 
 function popupProfileSet() {
   const userInfo = inputValuesChecker.getUserInfo();
-
   
   popUpProfileEditName.value = userInfo.userName;
   popUpProfileEditDescription.value = userInfo.userDescription;
   profilePopup.open();
-  profilePopup.setEventListeners(); //Добавляем обработчики
+   //Добавляем обработчики
 }
 // форма профиля 
 
 //Pop-up profile
 popUpProfilOpenButton.addEventListener('click', popupProfileSet);
-
 popUpNewCardButton.addEventListener('click', popupWithFormSet);
 
-const validators = new Map(); //подключение валидации
+const validators = new Map();
 const formList = Array.from(document.querySelectorAll('.popup__form'));
 
 formList.forEach((form) => {  //создаем ключ/значение в Map и поключаем валидатор к соотв. форме
@@ -116,5 +106,8 @@ formList.forEach((form) => {  //создаем ключ/значение в Map 
   validator.enableValidation();
 });
 
-cardsFromArray.renderItems();
+appender.renderItems();
+imagePopup.setEventListeners();
+newCardPopup.setEventListeners();
+profilePopup.setEventListeners();
 
