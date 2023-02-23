@@ -75,15 +75,14 @@ const profilePopup = new PopupWithForm({
 const addCardValidator = new FormValidator(validationSettings, popupNewCard)
 
 // форма добавления новых карточек
-function popupWithFormSet() {
-
+function setPopupWithForm() {
   addCardValidator.disableSubmitButton();
   newCardPopup.open();
 }
 // форма добавления новых карточек
 
 // форма профиля 
-function popupProfileSet() {
+function setPopupProfile() {
   const userInfo = inputValuesChecker.getUserInfo();
   
   popUpProfileEditName.value = userInfo.userName;
@@ -94,8 +93,8 @@ function popupProfileSet() {
 // форма профиля 
 
 //Pop-up profile
-popUpProfilOpenButton.addEventListener('click', popupProfileSet);
-popUpNewCardButton.addEventListener('click', popupWithFormSet);
+popUpProfilOpenButton.addEventListener('click', setPopupProfile);
+popUpNewCardButton.addEventListener('click', setPopupWithForm);
 
 const validators = new Map();
 const formList = Array.from(document.querySelectorAll('.popup__form'));
