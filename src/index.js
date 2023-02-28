@@ -27,62 +27,78 @@ const popUpProfilOpenButton = document.querySelector('.profile__edit-button'),
       popUpProfileEditDescription = popUpProfile.querySelector('.popup__input_type_description');
 //Profile popup     
 
-//Create new card popup
-const popUpNewCardButton = document.querySelector('.profile__add-button'),
-      cardList = document.querySelector('.cards__list');
-//Create new card popup
+const popupNewCard = document.querySelector('#popup-new-card');
+const popUpNewCardButton = document.querySelector('.profile__add-button');      
 
-// форма добавления новых карточек
-function popupWithFormSet() {
-  const popupWithForm = new PopupWithForm('#popup-new-card', (evt) => {
-   evt.preventDefault();   
-   
-   cardList.prepend(createCard(popupWithForm._getInputValues()));//генерация карточки из возвращаемного объекта getInputValues                                                                    
-   popupWithForm.close();
-  });
 
-  popupWithForm.setEventListeners(); //Добавляем обработчики
-  popupWithForm.open();
+const handleCardClick = (name, link) => {
+  imagePopup.open(name, link);  
 }
-// форма добавления новых карточек
 
-// форма профиля 
-function popupProfileSet() {
-  const inputValuesChecker = new UserInfo({  //Следим за состоянием имени и описания профиля
-    userNameSelector: '.profile__name', 
-    userDescriptionSelector: '.profile__description'
-  });
-
-  const formPopup = new PopupWithForm('#popup-profile', (evt, submitCallBack) => {
-    evt.preventDefault();
-
-    inputValuesChecker.setUserInfo(formPopup._getInputValues()); //меняем имя и описания при отправке формы профля
-    formPopup.close();
-  });
-
-  formPopup.setInputValue(popUpName, popUpDescription);
-  formPopup.open();
-  formPopup.setEventListeners(); //Добавляем обработчики
-}
-// форма профиля 
-
-//Pop-up profile
-popUpProfilOpenButton.addEventListener('click', popupProfileSet);
-
-popUpNewCardButton.addEventListener('click', popupWithFormSet);
-
-function createCard(cardData) {
-  const handleCardClick = (name, link) => {
-    const makeImageOpen = new PopupWithImage('.popup-image');
-    makeImageOpen.open(name, link);
-    makeImageOpen.setEventListeners();
-  }
-  
+function createCard(cardData) {  
   const card = new Card (cardData, '.template', handleCardClick);
   return card.generateCard(); //возращение разметки 
 }
 
-const validators = new Map(); //подключение валидации
+const cardArrayToRender = initialCards.map(element => {
+  const cardArray = createCard(element);
+  return cardArray;
+});
+
+const appender = new Section({
+  items: cardArrayToRender,
+  renderer: (element) => {
+    appender.addItem(element);
+  }
+}, '.cards__list');
+
+const imagePopup = new PopupWithImage('.popup-image');
+
+const inputValuesChecker = new UserInfo({  //Следим за состоянием имени и описания профиля
+  userNameSelector: '.profile__name',
+  userDescriptionSelector: '.profile__description'
+});
+
+const newCardPopup = new PopupWithForm({ 
+  popupSelector: '#popup-new-card',
+  submitCallBack: (item) => {
+    const card = createCard(item);
+    appender.addItem(card);
+  }
+});
+
+const profilePopup = new PopupWithForm({
+  popupSelector: '#popup-profile',
+  submitCallBack: (item) => {
+    inputValuesChecker.setUserInfo(item)
+  }
+});
+
+const addCardValidator = new FormValidator(validationSettings, popupNewCard)
+
+// форма добавления новых карточек
+function setPopupWithForm() {
+  addCardValidator.disableSubmitButton();
+  newCardPopup.open();
+}
+// форма добавления новых карточек
+
+// форма профиля 
+function setPopupProfile() {
+  const userInfo = inputValuesChecker.getUserInfo();
+  
+  popUpProfileEditName.value = userInfo.userName;
+  popUpProfileEditDescription.value = userInfo.userDescription;
+  profilePopup.open();
+   //Добавляем обработчики
+}
+// форма профиля 
+
+//Pop-up profile
+popUpProfilOpenButton.addEventListener('click', setPopupProfile);
+popUpNewCardButton.addEventListener('click', setPopupWithForm);
+
+const validators = new Map();
 const formList = Array.from(document.querySelectorAll('.popup__form'));
 
 formList.forEach((form) => {  //создаем ключ/значение в Map и поключаем валидатор к соотв. форме
@@ -91,15 +107,8 @@ formList.forEach((form) => {  //создаем ключ/значение в Map 
   validator.enableValidation();
 });
 
-const elementList = new Section({ //Отрисовываем карточки приходящие из createCard
-  items: initialCards.map(element => {
-    const cardArray = createCard(element);
-    return cardArray;
-  }),
-  renderer: (element, nodeSelector) => {
-    nodeSelector.append(element);
-  }
-}, '.cards__list');
-
-elementList.addItem(); 
+appender.renderItems();
+imagePopup.setEventListeners();
+newCardPopup.setEventListeners();
+profilePopup.setEventListeners();
 

@@ -11,8 +11,6 @@ export class UserInfo {
     };
   }
 
-  
-
   setUserInfo({name, link}) {  
     this._userNameElement.textContent = name;
     this._userDescriptionElement.textContent = link;
