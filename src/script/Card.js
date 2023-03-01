@@ -2,6 +2,7 @@ class Card {
   constructor(data, templateSelector, handleCardClick, trasherCallback) {
     this._name = data.name;
     this._imageLink = data.link;
+    this._likesNumber = data.likes;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
     this._trasherCallback = trasherCallback;
@@ -42,6 +43,11 @@ class Card {
     });
   };
 
+  showHowManyLikes() {
+    this._likesNumberElement = this._cardElement.querySelector('.card__like-number');
+    this._likesNumberElement.textContent = this._likesNumber;
+  }
+
   _addOpenImagePopupListener() { // Навешиваем обработчик, приходящий из handleCardClick
     this._cardImage.addEventListener('click', () => {
       this._handleCardClick(this._name, this._imageLink);
@@ -55,6 +61,7 @@ class Card {
 
     this._addLikeListener();
     this._addTrashListener();
+    this.showHowManyLikes();
     this._addOpenImagePopupListener();
 
     this._cardTitle.textContent = this._name;

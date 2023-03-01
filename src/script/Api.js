@@ -16,7 +16,7 @@ export class Api {
   }
 
   changeProfileInfo(item) {
-    fetch('https://nomoreparties.co/v1/cohort-60/users/me', {
+    return fetch('https://nomoreparties.co/v1/cohort-60/users/me', {
       method: 'PATCH',
       headers: {
         authorization: this._myToken,
@@ -60,15 +60,18 @@ export class Api {
     })
       .then(res => res.json())
       .then((result) => {
+        console.log(result);
         const cards = []
         result.forEach(card => {          
           let cardData = {
             name: card.name,
             link: card.link,
-            id: card._id
+            id: card._id,
+            likes: card.likes.length
           };
         cards.push(cardData);
         });
+        console.log(cards);
         return cards;
       })
   }

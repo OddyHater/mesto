@@ -33,7 +33,9 @@
 @import url(../blocks/card/__info/card__info.css);
 @import url(../blocks/card/__trash-button/card__trash-button.css);
 @import url(../blocks/card/__name/card__name.css);
+@import url(../blocks/card/__like-wrapper/card__like-wrapper.css);
 @import url(../blocks/card/__like/card__like.css);
+@import url(../blocks/card/__like-number/card__like-number.css);
 /*CARD*/
 
 /*FOOTER*/

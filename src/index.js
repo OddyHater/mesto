@@ -38,10 +38,9 @@ const handleCardClick = (name, link) => {
 const api = new Api('a85e5fd1-766e-427c-ac2c-de92362af89e');
 
 
-function createCard(cardData) {
-  console.log(cardData.id);
+function createCard(cardData) {  
   const card = new Card (cardData, '.template', handleCardClick, () => {
-    api.removeCardFromServer(cardData.id)
+    api.removeCardFromServer(cardData.id);
   });
   return card.generateCard(); //возращение разметки 
 }
@@ -63,15 +62,13 @@ const inputValuesChecker = new UserInfo({  //Следим за состояни�
 
 const newCardPopup = new PopupWithForm({ 
   popupSelector: '#popup-new-card',
-  submitCallBack: (item) => {
-    console.log(item);
-    api.pushCardToServer(item.name, item.link)
+  submitCallBack: (item) => {    
+    api.pushCardToServer(item.name, item.link, item.likes)
       .then(res => {        
-        const card = createCard(item);        
+        const card = createCard(item);
         appender.addItemReverse(card);        
       })
-      .catch(err => 
-        console.log(err))
+      .catch(err => console.log(err));
   }
 });
 
@@ -131,8 +128,7 @@ profilePopup.setEventListeners();
 
 
 api.getInitialCards()
-  .then(cards => {
-    console.log(cards);
+  .then(cards => {    
     cards.forEach(card => {
       const cardToRender = (createCard(card));
 
@@ -145,5 +141,5 @@ api.getProfileInfo()
   .then(data => {
     console.log(data);
     popUpName.textContent = data.name;
-    popUpDescription.textContent = data.about
+    popUpDescription.textContent = data.about;
   }); 
