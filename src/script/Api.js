@@ -29,8 +29,9 @@ export class Api {
     });
   }
 
-  pushCardToServer({name, link}) {
-    fetch('https://mesto.nomoreparties.co/v1/cohort-60/cards', {
+  pushCardToServer(name, link) {
+    console.log(name, link);
+    return fetch('https://mesto.nomoreparties.co/v1/cohort-60/cards', {
       method: 'POST',
       headers: {
         authorization: this._myToken,
@@ -41,6 +42,10 @@ export class Api {
         link: link
       })
     })
+  }
+
+  removeCardFromServer() {
+    
   }
 
   getInitialCards() {

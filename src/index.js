@@ -36,7 +36,7 @@ const handleCardClick = (name, link) => {
   imagePopup.open(name, link);  
 }
 
-const api = new Api('');
+const api = new Api('a85e5fd1-766e-427c-ac2c-de92362af89e');
 
 function createCard(cardData) {  
   const card = new Card (cardData, '.template', handleCardClick);
@@ -62,11 +62,20 @@ const inputValuesChecker = new UserInfo({  //Следим за состояни�
   userDescriptionSelector: '.profile__description'
 });
 
+
 const newCardPopup = new PopupWithForm({ 
   popupSelector: '#popup-new-card',
   submitCallBack: (item) => {
-    const card = createCard(item);
-    appender.addItem(card);
+    console.log(item);
+    api.pushCardToServer(item.name, item.link)
+      .then(res => {
+        const card = createCard(item);
+        console.log(card);
+        appender.addItemReverse(card);
+        console.log(res);
+      })
+      .catch(err => 
+        console.log(err))
   }
 });
 

@@ -32,9 +32,10 @@ export class PopupWithForm extends Popup {
     this._cardLink.value = link.textContent;
   };
 
+  //class PopupWithForm
   setEventListeners() {
     super.setEventListeners();
-    this._popupForm.addEventListener('submit', (evt) => {
+    this._popupForm.addEventListener('submit', (evt) => {      
       evt.preventDefault();
 
       this._submitCallBack(this._getInputValues());

@@ -6,7 +6,11 @@ export class Section {
   };
 
   addItem(element) {        
-    this._containerNode.prepend(element);    
+    this._containerNode.append(element);    
+  }
+
+  addItemReverse(element) {        
+    this._containerNode.prepend(element);
   }
 
   renderItems() {
