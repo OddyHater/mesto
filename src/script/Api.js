@@ -29,8 +29,7 @@ export class Api {
     });
   }
 
-  pushCardToServer(name, link) {
-    console.log(name, link);
+  pushCardToServer(name, link) {    
     return fetch('https://mesto.nomoreparties.co/v1/cohort-60/cards', {
       method: 'POST',
       headers: {
@@ -44,8 +43,13 @@ export class Api {
     })
   }
 
-  removeCardFromServer() {
-    
+  removeCardFromServer(cardID) {
+    return fetch(`https://mesto.nomoreparties.co/v1/cohort-60/cards/${cardID}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._myToken
+      }
+    })
   }
 
   getInitialCards() {
@@ -57,10 +61,11 @@ export class Api {
       .then(res => res.json())
       .then((result) => {
         const cards = []
-        result.forEach(card => {
+        result.forEach(card => {          
           let cardData = {
             name: card.name,
-            link: card.link
+            link: card.link,
+            id: card._id
           };
         cards.push(cardData);
         });

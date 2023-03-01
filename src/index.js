@@ -3,7 +3,6 @@ import './pages/index.css';
 import { Api } from './script/Api.js';
 import { Card } from './script/Card.js';
 import { FormValidator } from './script/Validate.js';
-import { initialCards } from './script/initalCards.js';
 import { Section } from './script/Section.js';
 import { PopupWithImage } from './script/PopupWithImage.js';
 import { PopupWithForm } from './script/PopupWithForm.js';
@@ -38,18 +37,17 @@ const handleCardClick = (name, link) => {
 
 const api = new Api('a85e5fd1-766e-427c-ac2c-de92362af89e');
 
-function createCard(cardData) {  
-  const card = new Card (cardData, '.template', handleCardClick);
+
+function createCard(cardData) {
+  console.log(cardData.id);
+  const card = new Card (cardData, '.template', handleCardClick, () => {
+    api.removeCardFromServer(cardData.id)
+  });
   return card.generateCard(); //возращение разметки 
 }
 
-const cardArrayToRender = initialCards.map(element => {
-  const cardArray = createCard(element);
-  return cardArray;
-});
-
 const appender = new Section({
-  items: cardArrayToRender,
+  items: [],
   renderer: (element) => {
     appender.addItem(element);
   }
@@ -69,6 +67,7 @@ const newCardPopup = new PopupWithForm({
     console.log(item);
     api.pushCardToServer(item.name, item.link)
       .then(res => {
+        console.log(item);
         const card = createCard(item);
         console.log(card);
         appender.addItemReverse(card);
@@ -127,6 +126,7 @@ profilePopup.setEventListeners();
 
 api.getInitialCards()
   .then(cards => {
+    console.log(cards);
     cards.forEach(card => {
       const cardToRender = (createCard(card));
 

@@ -1,9 +1,10 @@
 class Card {
-  constructor(data, templateSelector, handleCardClick) {
+  constructor(data, templateSelector, handleCardClick, trasherCallback) {
     this._name = data.name;
     this._imageLink = data.link;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
+    this._trasherCallback = trasherCallback;
   };
 
   _getTemplate() {
@@ -36,6 +37,7 @@ class Card {
     this._trashButton = this._cardElement.querySelector('.card__trash-button');
 
     this._trashButton.addEventListener('click', () => {
+      this._trasherCallback()
       this._deleteCard();
     });
   };
