@@ -1,5 +1,6 @@
 import './pages/index.css';
 
+import { Api } from './script/Api.js';
 import { Card } from './script/Card.js';
 import { FormValidator } from './script/Validate.js';
 import { initialCards } from './script/initalCards.js';
@@ -34,6 +35,8 @@ const popUpNewCardButton = document.querySelector('.profile__add-button');
 const handleCardClick = (name, link) => {
   imagePopup.open(name, link);  
 }
+
+const api = new Api('a85e5fd1-766e-427c-ac2c-de92362af89e');
 
 function createCard(cardData) {  
   const card = new Card (cardData, '.template', handleCardClick);
@@ -112,3 +115,12 @@ imagePopup.setEventListeners();
 newCardPopup.setEventListeners();
 profilePopup.setEventListeners();
 
+
+api.getInitialCards()
+  .then(cards => {
+    cards.forEach(card => {
+      const cardToRender = (createCard(card));
+
+      appender.addItem(cardToRender);
+    })
+  })
