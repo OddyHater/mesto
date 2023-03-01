@@ -66,12 +66,9 @@ const newCardPopup = new PopupWithForm({
   submitCallBack: (item) => {
     console.log(item);
     api.pushCardToServer(item.name, item.link)
-      .then(res => {
-        console.log(item);
-        const card = createCard(item);
-        console.log(card);
-        appender.addItemReverse(card);
-        console.log(res);
+      .then(res => {        
+        const card = createCard(item);        
+        appender.addItemReverse(card);        
       })
       .catch(err => 
         console.log(err))
@@ -81,7 +78,16 @@ const newCardPopup = new PopupWithForm({
 const profilePopup = new PopupWithForm({
   popupSelector: '#popup-profile',
   submitCallBack: (item) => {
-    inputValuesChecker.setUserInfo(item)
+    console.log(item);
+    api.changeProfileInfo(item)
+      .then(res => {
+        console.log(res);
+        inputValuesChecker.setUserInfo(item);
+      })      
+      .catch(err => {
+        console.log(err);
+      })
+    
   }
 });
 

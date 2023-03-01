@@ -15,7 +15,7 @@ export class Api {
       })
   }
 
-  changeProfileInfo({name, description}) {
+  changeProfileInfo(item) {
     fetch('https://nomoreparties.co/v1/cohort-60/users/me', {
       method: 'PATCH',
       headers: {
@@ -23,8 +23,8 @@ export class Api {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        name: name,
-        about: description
+        name: item.name,
+        about: item.link
       })
     });
   }
