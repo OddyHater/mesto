@@ -4,6 +4,7 @@ import { Api } from './script/Api.js';
 import { Card } from './script/Card.js';
 import { FormValidator } from './script/Validate.js';
 import { Section } from './script/Section.js';
+import { Popup } from './script/Popup';
 import { PopupWithImage } from './script/PopupWithImage.js';
 import { PopupWithForm } from './script/PopupWithForm.js';
 import { UserInfo } from './script/UserInfo.js';
@@ -34,6 +35,8 @@ const popUpNewCardButton = document.querySelector('.profile__add-button');
 const handleCardClick = (name, link) => {
   imagePopup.open(name, link);  
 }
+
+const api = new Api('a85e5fd1-766e-427c-ac2c-de92362af89e');
 
 async function renderCards() {
   try {
@@ -74,9 +77,6 @@ function cardLikeCallback(evt, cardId) {
   }
 }
 
-const api = new Api('a85e5fd1-766e-427c-ac2c-de92362af89e');
-
-
 function createCard(cardData) {  
   const card = new Card (
     cardData,
@@ -106,6 +106,7 @@ const inputValuesChecker = new UserInfo({  //Следим за состояни�
 });
 
 
+
 const newCardPopup = new PopupWithForm({
   popupSelector: '#popup-new-card',
   submitCallBack: (item) => {
@@ -133,6 +134,10 @@ const profilePopup = new PopupWithForm({
     
   }
 });
+
+const deleteCardPopup = new Popup('#popup-delete')
+
+deleteCardPopup.setEventListeners()
 
 const addCardValidator = new FormValidator(validationSettings, popupNewCard)
 
@@ -167,7 +172,6 @@ formList.forEach((form) => {  //создаем ключ/значение в Map 
   validator.enableValidation();
 });
 
-appender.renderItems();
 imagePopup.setEventListeners();
 newCardPopup.setEventListeners();
 profilePopup.setEventListeners();
