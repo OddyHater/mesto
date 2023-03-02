@@ -47,9 +47,8 @@ class Card {
   _addTrashListener() {
     this._trashButton = this._cardElement.querySelector('.card__trash-button');
 
-    this._trashButton.addEventListener('click', () => {
-      this._trasherCallback()
-      this._deleteCard();
+    this._trashButton.addEventListener('click', (evt) => {
+      this._trasherCallback(evt);
     });
   };
 

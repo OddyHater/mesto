@@ -4,9 +4,9 @@ import { Api } from './script/Api.js';
 import { Card } from './script/Card.js';
 import { FormValidator } from './script/Validate.js';
 import { Section } from './script/Section.js';
-import { Popup } from './script/Popup';
 import { PopupWithImage } from './script/PopupWithImage.js';
 import { PopupWithForm } from './script/PopupWithForm.js';
+import { PopupWithDelete } from './script/PopupWithDelete';
 import { UserInfo } from './script/UserInfo.js';
 
 
@@ -29,32 +29,38 @@ const popUpProfilOpenButton = document.querySelector('.profile__edit-button'),
 //Profile popup     
 
 const popupNewCard = document.querySelector('#popup-new-card');
-const popUpNewCardButton = document.querySelector('.profile__add-button');      
+const popUpNewCardButton = document.querySelector('.profile__add-button'); 
 
 
 const handleCardClick = (name, link) => {
   imagePopup.open(name, link);  
-}
+};
 
 const api = new Api('a85e5fd1-766e-427c-ac2c-de92362af89e');
+
+const deleteCardPopup = new PopupWithDelete(
+  '#popup-delete',
+  (cardId) => {
+    api.removeCardFromServer(cardId);
+  });
 
 async function renderCards() {
   try {
     const data = await api.getInitialCards();
     const profileInfo = await api.getProfileInfo();  
-    const myId = profileInfo._id;    
+    const myId = profileInfo._id;
     data.forEach(card => {
       const cardToRender = createCard(card);
       const cardTrashButton = cardToRender.querySelector('.card__trash-button');
-      const cardLikeElement = cardToRender.querySelector('.card__like')      
+      const cardLikeElement = cardToRender.querySelector('.card__like');
       if(card.owner !== myId) {
-        cardTrashButton.remove()        
+        cardTrashButton.remove();
       }
       card.likesArr.forEach((like) => {
         if(like._id === myId) {
-          cardLikeElement.classList.add('like_active')
+          cardLikeElement.classList.add('like_active');
         }
-      })  
+      });
       appender.addItem(cardToRender);
       
     })
@@ -63,8 +69,10 @@ async function renderCards() {
   }
 }
 
-function trasherCallback(id) {
-  api.removeCardFromServer(id);
+function trasherCallback(cardID, evt) {
+  const card = evt.target.closest('.card');
+  deleteCardPopup.open(cardID, card);
+  // api.removeCardFromServer(id);
 }
 
 function cardLikeCallback(evt, cardId) {
@@ -82,11 +90,11 @@ function createCard(cardData) {
     cardData,
     '.template',
     handleCardClick,
-    () => {
-      trasherCallback(cardData.id)
+    (evt) => {
+      trasherCallback(cardData.id, evt);
     },
     (evt) => {
-      cardLikeCallback(evt, cardData.id)
+      cardLikeCallback(evt, cardData.id);
     });
   return card.generateCard(); //возращение разметки 
 }
@@ -115,7 +123,7 @@ const newCardPopup = new PopupWithForm({
         const card = createCard(item);
         appender.addItemReverse(card);
 
-        window.location.reload()
+        window.location.reload();
       })
       .catch(err => console.log(err));
   }
@@ -134,10 +142,6 @@ const profilePopup = new PopupWithForm({
     
   }
 });
-
-const deleteCardPopup = new Popup('#popup-delete')
-
-deleteCardPopup.setEventListeners()
 
 const addCardValidator = new FormValidator(validationSettings, popupNewCard)
 
@@ -175,8 +179,9 @@ formList.forEach((form) => {  //создаем ключ/значение в Map 
 imagePopup.setEventListeners();
 newCardPopup.setEventListeners();
 profilePopup.setEventListeners();
+deleteCardPopup.setEventListeners();
 
-renderCards()
+renderCards();
 
 api.getProfileInfo()
   .then(data => {    
