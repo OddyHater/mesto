@@ -6,7 +6,7 @@ export class Section {
   };
 
   addItem(element) {        
-    this._containerNode.append(element);    
+    this._containerNode.append(element);
   }
 
   addItemReverse(element) {        

@@ -35,13 +35,59 @@ const handleCardClick = (name, link) => {
   imagePopup.open(name, link);  
 }
 
+async function renderCards() {
+  try {
+    const data = await api.getInitialCards();
+    const profileInfo = await api.getProfileInfo();  
+    const myId = profileInfo._id;    
+    data.forEach(card => {
+      const cardToRender = createCard(card);
+      const cardTrashButton = cardToRender.querySelector('.card__trash-button');
+      const cardLikeElement = cardToRender.querySelector('.card__like')      
+      if(card.owner !== myId) {
+        cardTrashButton.remove()        
+      }
+      card.likesArr.forEach((like) => {
+        if(like._id === myId) {
+          cardLikeElement.classList.add('like_active')
+        }
+      })  
+      appender.addItem(cardToRender);
+      
+    })
+  } catch {
+    console.error(error);
+  }
+}
+
+function trasherCallback(id) {
+  api.removeCardFromServer(id);
+}
+
+function cardLikeCallback(evt, cardId) {
+  if(evt.target.classList.contains('like_active')) {
+    console.log('delete like');
+    api.removeLike(cardId);
+  } else {
+    console.log('add like');
+    api.addLike(cardId);
+  }
+}
+
 const api = new Api('a85e5fd1-766e-427c-ac2c-de92362af89e');
 
 
 function createCard(cardData) {  
-  const card = new Card (cardData, '.template', handleCardClick, () => {
-    api.removeCardFromServer(cardData.id);
-  });
+  const card = new Card (
+    cardData,
+    '.template',
+    handleCardClick,
+    () => {
+      trasherCallback(cardData.id)
+    },
+    (evt) => {
+      cardLikeCallback(evt, cardData.id)
+    });
   return card.generateCard(); //возращение разметки 
 }
 
@@ -60,13 +106,15 @@ const inputValuesChecker = new UserInfo({  //Следим за состояни�
 });
 
 
-const newCardPopup = new PopupWithForm({ 
+const newCardPopup = new PopupWithForm({
   popupSelector: '#popup-new-card',
-  submitCallBack: (item) => {    
+  submitCallBack: (item) => {
     api.pushCardToServer(item.name, item.link, item.likes)
-      .then(res => {        
+      .then(res => {
         const card = createCard(item);
-        appender.addItemReverse(card);        
+        appender.addItemReverse(card);
+
+        window.location.reload()
       })
       .catch(err => console.log(err));
   }
@@ -74,11 +122,9 @@ const newCardPopup = new PopupWithForm({
 
 const profilePopup = new PopupWithForm({
   popupSelector: '#popup-profile',
-  submitCallBack: (item) => {
-    console.log(item);
+  submitCallBack: (item) => {    
     api.changeProfileInfo(item)
-      .then(res => {
-        console.log(res);
+      .then(res => {        
         inputValuesChecker.setUserInfo(item);
       })      
       .catch(err => {
@@ -126,20 +172,10 @@ imagePopup.setEventListeners();
 newCardPopup.setEventListeners();
 profilePopup.setEventListeners();
 
-
-api.getInitialCards()
-  .then(cards => {    
-    cards.forEach(card => {
-      const cardToRender = (createCard(card));
-
-      appender.addItem(cardToRender);
-    })
-  })
-
+renderCards()
 
 api.getProfileInfo()
-  .then(data => {
-    console.log(data);
+  .then(data => {    
     popUpName.textContent = data.name;
     popUpDescription.textContent = data.about;
-  }); 
+}); 

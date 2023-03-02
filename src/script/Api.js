@@ -29,7 +29,7 @@ export class Api {
     });
   }
 
-  pushCardToServer(name, link) {    
+  pushCardToServer(name, link, like) {    
     return fetch('https://mesto.nomoreparties.co/v1/cohort-60/cards', {
       method: 'POST',
       headers: {
@@ -38,7 +38,8 @@ export class Api {
       },
       body: JSON.stringify({
         name: name,
-        link: link
+        link: link,
+        like: like
       })
     })
   }
@@ -46,6 +47,24 @@ export class Api {
   removeCardFromServer(cardID) {
     return fetch(`https://mesto.nomoreparties.co/v1/cohort-60/cards/${cardID}`, {
       method: 'DELETE',
+      headers: {
+        authorization: this._myToken
+      }
+    })
+  }
+
+  addLike(cardId) {
+    return fetch(`https://mesto.nomoreparties.co/v1/cohort-60/cards/${cardId}/likes`, {
+      method: 'PUT',
+      headers: {
+        authorization: this._myToken
+      }
+    })
+  }
+
+  removeLike(cardId) {
+    return fetch(`https://mesto.nomoreparties.co/v1/cohort-60/cards/${cardId}/likes`, {
+      method: 'DELETE', 
       headers: {
         authorization: this._myToken
       }
@@ -60,14 +79,15 @@ export class Api {
     })
       .then(res => res.json())
       .then((result) => {
-        console.log(result);
         const cards = []
         result.forEach(card => {          
           let cardData = {
             name: card.name,
             link: card.link,
             id: card._id,
-            likes: card.likes.length
+            likesArr: card.likes,
+            likes: card.likes.length,
+            owner: card.owner._id
           };
         cards.push(cardData);
         });
