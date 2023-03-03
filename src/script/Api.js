@@ -3,16 +3,20 @@ export class Api {
     this._headers = options.headers
   }
 
+  _getResponseData(res) {
+    if(res.ok) {
+      return res.json()
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
+
   getProfileInfo() {
     return fetch('https://nomoreparties.co/v1/cohort-60/users/me', {
       headers: this._headers
     })
       .then(res => {
-        if(res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })      
+        return this._getResponseData(res);
+      })
   }
 
   changeProfileInfo(item) {
@@ -23,12 +27,9 @@ export class Api {
         name: item.name,
         about: item.link
       })
-        .then(res => {
-          if(res.ok) {
-            return res.json();
-          }
-          return Promise.reject(`Ошибка: ${res.status}`);
-        })
+      .then(res => {
+        return this._getResponseData(res);
+      })
     });
   }
 
@@ -43,10 +44,7 @@ export class Api {
       })          
     })
     .then(res => {
-      if(res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
+      return this._getResponseData(res);
     })
   }
 
@@ -56,10 +54,7 @@ export class Api {
       headers: this._headers
     })
     .then(res => {
-      if(res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
+      return this._getResponseData(res);
     })
   }
 
@@ -69,10 +64,7 @@ export class Api {
       headers: this._headers
     })
     .then(res => {
-      if(res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
+      return this._getResponseData(res);
     })
   }
 
@@ -82,10 +74,7 @@ export class Api {
       headers: this._headers
     })
     .then(res => {
-      if(res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
+      return this._getResponseData(res);
     })
   }
 
@@ -97,39 +86,33 @@ export class Api {
         avatar: link
       })
     })
-      .then(res => {
-        if(res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
+    .then(res => {
+      return this._getResponseData(res);
+    })
   }
 
   getInitialCards() {
     return fetch('https://mesto.nomoreparties.co/v1/cohort-60/cards', {
       headers: this._headers
     })
-      .then(res => {
-        if(res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
-      .then((result) => {
-        const cards = []
-        result.forEach(card => {   //проходим по объектам, формируем будущую карточку
-          let cardData = {
-            name: card.name,
-            link: card.link,
-            id: card._id,
-            likesArr: card.likes,
-            likes: card.likes.length,
-            owner: card.owner._id
-          };
-        cards.push(cardData);
-        });        
-        return cards; //возвращаем сформированный объект карточки для дальнейшей отрисовки
-      })
+    .then(res => {
+      return this._getResponseData(res);
+    })
+    .then((result) => {
+      const cards = []
+      result.forEach(card => {   //проходим по объектам, формируем будущую карточку
+        let cardData = {
+          name: card.name,
+          link: card.link,
+          id: card._id,
+          likesArr: card.likes,
+          likes: card.likes.length,
+          owner: card.owner._id
+        };
+      cards.push(cardData);
+      });        
+      return cards; //возвращаем сформированный объект карточки для дальнейшей отрисовки
+    })
   }
 
 

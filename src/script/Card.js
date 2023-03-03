@@ -23,8 +23,8 @@ class Card {
     this._likeButton.classList.toggle('like_active');    
   };
 
-  _deleteCard() {    
-    this._cardElement.remove();
+  _deleteCard() {
+    this._cardElement.remove(); // что значит зануллить? 
   }
 
   _addLikeListener() {
@@ -79,8 +79,8 @@ class Card {
 
     this._cardTitle.textContent = this._name;
     this._cardImage.alt = this._name;
-    this._cardImage.src = this._imageLink;  
-  
+    this._cardImage.src = this._imageLink;
+
     return this._cardElement; //Возвращаем разметку карточки.
   };
 }

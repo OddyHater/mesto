@@ -16,7 +16,7 @@ export class PopupWithDelete extends Popup {
     }
 
     removeCard(card) {
-        card.remove();
+      card.remove();
     }
 
     setEventListeners() {

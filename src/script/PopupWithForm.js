@@ -26,12 +26,7 @@ export class PopupWithForm extends Popup {
 
     return this._formValues;
   }
-
-  setInputValue(name, link) {
-    this._cardName.value = name.textContent;
-    this._cardLink.value = link.textContent;
-  };
-
+  
   //class PopupWithForm
   setEventListeners() {
     super.setEventListeners();

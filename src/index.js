@@ -49,9 +49,7 @@ const api = new Api(apiOptions);
 
 api.getProfileInfo()
   .then(data => {    
-    popUpName.textContent = data.name;
-    popUpDescription.textContent = data.about;
-    profileAvatar.src = data.avatar;
+    inputValuesChecker.setUserInfo(data);
   })
   .catch((err) => console.log(err)); 
 
@@ -167,7 +165,8 @@ const imagePopup = new PopupWithImage('.popup-image');
 
 const inputValuesChecker = new UserInfo({  //Следим за состоянием имени и описания профиля
   userNameSelector: '.profile__name',
-  userDescriptionSelector: '.profile__description'
+  userDescriptionSelector: '.profile__description',
+  userAvatarSelector: '.profile__avatar'
 });
 
 const addCardValidator = new FormValidator(validationSettings, popupNewCard) //Подключаем Валидатор
