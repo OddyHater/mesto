@@ -29,7 +29,9 @@ const popUpProfilOpenButton = document.querySelector('.profile__edit-button'),
 //Profile popup     
 
 const popupNewCard = document.querySelector('#popup-new-card');
-const popUpNewCardButton = document.querySelector('.profile__add-button'); 
+const popUpNewCardButton = document.querySelector('.profile__add-button');
+const editAvatarButton = document.querySelector('.profile__avatar-edit');
+const profileAvatar = document.querySelector('.profile__avatar');
 
 
 const handleCardClick = (name, link) => {
@@ -43,6 +45,15 @@ const deleteCardPopup = new PopupWithDelete(
   (cardId) => {
     api.removeCardFromServer(cardId);
   });
+
+const editAvatarPopup = new PopupWithForm({
+  popupSelector: '#popup-edit-avatar',
+  submitCallBack: (item) => {    
+    api.changeAvatar(item.link);
+
+    profileAvatar.src = item.link;
+  }
+})
 
 async function renderCards() {
   try {
@@ -161,11 +172,17 @@ function setPopupProfile() {
   profilePopup.open();
    //Добавляем обработчики
 }
+
+function setEditAvatar() {
+  addCardValidator.disableSubmitButton();
+  editAvatarPopup.open();
+}
 // форма профиля 
 
 //Pop-up profile
 popUpProfilOpenButton.addEventListener('click', setPopupProfile);
 popUpNewCardButton.addEventListener('click', setPopupWithForm);
+editAvatarButton.addEventListener('click', setEditAvatar);
 
 const validators = new Map();
 const formList = Array.from(document.querySelectorAll('.popup__form'));
@@ -180,11 +197,14 @@ imagePopup.setEventListeners();
 newCardPopup.setEventListeners();
 profilePopup.setEventListeners();
 deleteCardPopup.setEventListeners();
+editAvatarPopup.setEventListeners()
 
 renderCards();
 
 api.getProfileInfo()
-  .then(data => {    
+  .then(data => {
+    console.log(data);
     popUpName.textContent = data.name;
     popUpDescription.textContent = data.about;
+    profileAvatar.src = data.avatar;
 }); 

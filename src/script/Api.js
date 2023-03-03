@@ -71,6 +71,20 @@ export class Api {
     })
   }
 
+  changeAvatar(link) {
+    console.log(link);
+    return fetch(`https://mesto.nomoreparties.co/v1/cohort-60/users/me/avatar`, {
+      method: 'PATCH',
+      headers: {
+        authorization: this._myToken,
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify({
+        avatar: link
+      })
+    })
+  }
+
   getInitialCards() {
     return fetch('https://mesto.nomoreparties.co/v1/cohort-60/cards', {
       headers: {
