@@ -57,6 +57,7 @@
 @import url(../blocks/profile-email-error/profile-email-error.css);
 @import url(../blocks/card-name-error/card-name-error.css);
 @import url(../blocks/card-url-error/card-url-error.css);
+@import url(../blocks/avatar-link-error/avatar-link-error.css);
 @import url(../blocks/profile-name-error/_active/profile-name-error_active.css);
 @import url(../blocks/popup/__submit/_inactive/popup__submit_inactive.css);
 @import url(../blocks/popup/__close-button/popup__close-button.css);

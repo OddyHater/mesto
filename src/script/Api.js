@@ -127,8 +127,7 @@ export class Api {
             owner: card.owner._id
           };
         cards.push(cardData);
-        });
-        console.log(cards);
+        });        
         return cards; //возвращаем сформированный объект карточки для дальнейшей отрисовки
       })
   }

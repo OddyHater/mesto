@@ -9,7 +9,6 @@ import { PopupWithForm } from './script/PopupWithForm.js';
 import { PopupWithDelete } from './script/PopupWithDelete';
 import { UserInfo } from './script/UserInfo.js';
 
-
 const validationSettings = { 
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
@@ -49,8 +48,7 @@ const apiOptions = {
 const api = new Api(apiOptions);
 
 api.getProfileInfo()
-  .then(data => {
-    console.log(data);
+  .then(data => {    
     popUpName.textContent = data.name;
     popUpDescription.textContent = data.about;
     profileAvatar.src = data.avatar;
@@ -94,11 +92,9 @@ function trasherCallback(cardID, evt) {
 };
 
 function cardLikeCallback(evt, cardId) {
-  if(evt.target.classList.contains('like_active')) {
-    console.log('delete like');
+  if(evt.target.classList.contains('like_active')) {    
     api.removeLike(cardId);
-  } else {
-    console.log('add like');
+  } else {    
     api.addLike(cardId);
   }
 };
