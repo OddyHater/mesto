@@ -39,6 +39,7 @@
 .profile-email-error{color:red;font-family:Inter;font-size:12px;line-height:15px;margin-bottom:13px;max-width:234px;min-height:3em;opacity:0;text-align:left}
 .card-name-error{color:red;font-family:Inter;font-size:12px;line-height:15px;max-width:100%;min-height:3em;opacity:0;text-align:left}
 .card-url-error{color:red;font-family:Inter;font-size:12px;line-height:15px;margin-bottom:13px;max-width:234px;min-height:3em;opacity:0;text-align:left}
+.avatar-link-error{color:red;font-family:Inter;font-size:12px;line-height:15px;margin-bottom:13px;max-width:234px;min-height:3em;opacity:0;text-align:left}
 .profile-name-error_active{opacity:1}
 .popup__submit_inactive{background-color:transparent;border:1px solid #000;color:#000;cursor:not-allowed;opacity:.2}.popup__submit_inactive:hover{opacity:.2}
 .popup__close-button{background-color:transparent;background-image:url(e7037ad5420e241f7a53.svg);background-position:50%;background-repeat:no-repeat;background-size:contain;border:0;height:32px;outline:none;position:absolute;right:-40px;top:-40px;width:32px}@media screen and (max-width:768px){.popup__close-button{height:20px;right:0;top:-38px;width:20px}}
