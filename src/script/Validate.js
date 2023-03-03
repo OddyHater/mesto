@@ -23,6 +23,7 @@ class FormValidator {
   };
 
   disableSubmitButton() {
+    console.log(this._formButton);
     this._formButton.classList.add(this._settings.inactiveButtonClass);
     this._formButton.setAttribute('disabled', true);
   };

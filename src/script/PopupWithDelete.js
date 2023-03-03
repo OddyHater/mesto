@@ -9,7 +9,7 @@ export class PopupWithDelete extends Popup {
     }
 
     open(id, card) {
-        this._id = id;
+        this._id = id;    //при открытии получаем id и разметку удаляемой капрточки
         this._card = card;
         
         super.open();
@@ -23,9 +23,9 @@ export class PopupWithDelete extends Popup {
         super.setEventListeners();
         
         this._button.addEventListener('click', () => {
-            this._buttonClickCallback(this._id);
+            this._buttonClickCallback(this._id); //передаем id в колбек
+            this.removeCard(this._card); //передаем разметку карточки для удаления при сабмите
 
-            this.removeCard(this._card);
             this.close();
         });
     }
