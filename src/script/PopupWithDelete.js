@@ -22,8 +22,7 @@ export class PopupWithDelete extends Popup {
         super.setEventListeners();
         
         this._button.addEventListener('click', () => {
-            this._buttonClickCallback(this._id); //передаем id в колбек 
-            this.removeElement(this._elementToDelete);  
+            this._buttonClickCallback(this._id); //передаем id в колбек  
         });
     }
 }

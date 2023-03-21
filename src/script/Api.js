@@ -1,11 +1,11 @@
 export class Api {
   constructor(options) {    
-    this._headers = options.headers
+    this._headers = options.headers;
   }
 
   _getResponseData(res) {
-    if(res.ok) {
-      return res.json()
+    if(res.ok) {      
+      return res.json();
     }
     return Promise.reject(`Ошибка: ${res.status}`);
   }
@@ -33,19 +33,20 @@ export class Api {
     });
   }
 
-  pushCardToServer(name, link, like) {    
+  pushCardToServer(name, link, like, id) {    
     return fetch('https://mesto.nomoreparties.co/v1/cohort-60/cards', {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
         name: name,
         link: link,
-        like: like
-      })          
+        like: like,
+        id: id
+      })
     })
     .then(res => {
       return this._getResponseData(res);
-    })
+    });
   }
 
   removeCardFromServer(cardID) {
@@ -99,6 +100,7 @@ export class Api {
       return this._getResponseData(res);
     })
     .then((result) => {
+      console.log(result);
       const cards = []
       result.forEach(card => {   //проходим по объектам, формируем будущую карточку
         let cardData = {

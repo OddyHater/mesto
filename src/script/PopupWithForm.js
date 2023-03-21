@@ -34,7 +34,6 @@ export class PopupWithForm extends Popup {
       evt.preventDefault();
       
       this._submitCallBack(this._getInputValues());
-      this.close();
     });
   }
 }

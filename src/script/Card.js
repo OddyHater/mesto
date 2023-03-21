@@ -3,6 +3,7 @@ class Card {
     this._name = data.name;
     this._imageLink = data.link;
     this._likesNumber = data.likes;
+    this._cardOwner = data.owner;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
     this._trasherCallback = trasherCallback;
@@ -20,11 +21,19 @@ class Card {
   };
 
   _clickLike() {
-    this._likeButton.classList.toggle('like_active');    
+    this._likeButton.classList.toggle('like_active');
   };
 
   _deleteCard() {
     this._cardElement.remove(); // что значит зануллить? 
+  }
+
+  toggleLikeNumber(isLiked) {
+    if(isLiked) {
+      this._likesNumberElement.textContent = Number(this._likesNumberElement.textContent) - 1;
+    } else {
+      this._likesNumberElement.textContent = Number(this._likesNumberElement.textContent) + 1;
+    }
   }
 
   _addLikeListener() {
@@ -51,14 +60,14 @@ class Card {
     if(this._likesNumber) {
       this._likesNumberElement.textContent = this._likesNumber;
     } else {
-      this._likesNumberElement.textContent = '0';      
+      this._likesNumberElement.textContent = 0;      
     }  
   }
 
   _addOpenImagePopupListener() { // Навешиваем обработчик, приходящий из handleCardClick
     this._cardImage.addEventListener('click', () => {
       this._handleCardClick(this._name, this._imageLink);
-    });  
+    });
   };
 
   generateCard() {
@@ -74,6 +83,8 @@ class Card {
     this._cardTitle.textContent = this._name;
     this._cardImage.alt = this._name;
     this._cardImage.src = this._imageLink;
+
+    console.log(this._cardOwner);
 
     return this._cardElement; //Возвращаем разметку карточки.
   };

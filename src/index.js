@@ -57,24 +57,27 @@ api.getProfileInfo()
 //Колбеки для передачи в конструктор класса
 async function renderCards() {
   try {
-    const data = await api.getInitialCards();   //получаем объекты карточек
-    const profileInfo = await api.getProfileInfo(); //получаем инфо профиля
-    const myId = profileInfo._id;  //находим наш id
+    const data = await api.getInitialCards();   //получаем объекты карточек    
+    const myId = inputValuesChecker.getUserInfo().userId; //получаем наш id
+
+    console.log(data);
+
     data.forEach(card => {
       const cardToRender = createCard(card); //формируем разметку
       const cardTrashButton = cardToRender.querySelector('.card__trash-button');
       const cardLikeElement = cardToRender.querySelector('.card__like');
+
       if(card.owner !== myId) { // Если карточка не наша, то удаляем иконку корзины
         cardTrashButton.remove();
       }
-      card.likesArr.forEach((like) => {
+
+      card.likesArr.forEach((like) => {        
         if(like._id === myId) { //если мы лайкнули карточку, то отрисовываем с закрашенным лайком
           cardLikeElement.classList.add('like_active');
         }
       });
-      appender.addItem(cardToRender); // добавляем карточку в разметку
-      
-    })
+      appender.addItem(cardToRender); // добавляем карточку в разметку      
+    });
   } catch {
     console.error(error);
   }
@@ -86,19 +89,16 @@ const handleCardClick = (name, link) => {
 
 function trasherCallback(cardID, evt) {
   const card = evt.target.closest('.card'); //находим нужную карточку для удаления 
-  deleteCardPopup.open(cardID, card);  
+  deleteCardPopup.open(cardID, card);
 };
 
-function cardLikeCallback(evt, cardId) {
-  const likeNumber = evt.target
-    .closest('.card__like-wrapper')
-    .querySelector('.card__like-number');
+function cardLikeCallback(evt, card, cardId) {
 
   if(evt.target.classList.contains('like_active')) {
     api.removeLike(cardId)
       .then(res => {
         if(res) {
-          likeNumber.textContent = Number(likeNumber.textContent) - 1;
+          card.toggleLikeNumber(true);
         } else(err => console.log(err));
       })
       .catch(err => console.log(err));
@@ -106,7 +106,7 @@ function cardLikeCallback(evt, cardId) {
     api.addLike(cardId)
       .then(res => {
         if(res) {
-          likeNumber.textContent = Number(likeNumber.textContent) + 1;
+          card.toggleLikeNumber(false);
         } else(err => console.log(err)); 
     })
     .catch(err => console.log(err));
@@ -122,7 +122,7 @@ function createCard(cardData) {
       trasherCallback(cardData.id, evt);
     },
     (evt) => {
-      cardLikeCallback(evt, cardData.id);
+      cardLikeCallback(evt, card, cardData.id);
     });
   return card.generateCard(); //возращение разметки 
 };
@@ -143,6 +143,7 @@ const deleteCardPopup = new PopupWithDelete(
     api.removeCardFromServer(cardId)
       .then(res => {
         if(res) {
+          deleteCardPopup.removeElement();
           deleteCardPopup.close();
         }
       }); //колбек сабмита
@@ -162,13 +163,13 @@ const editAvatarPopup = new PopupWithForm({
 const newCardPopup = new PopupWithForm({
   popupSelector: '#popup-new-card',
   submitCallBack: (item) => {   //В классе PopupWithForm вместо item попадает getInputValues()
-    api.pushCardToServer(item.name, item.link, item.likes)
+    api.pushCardToServer(item.name, item.link, item.likes, item._id)
       .then(res => {
+        item['id'] = res._id;
         const card = createCard(item);
+
         appender.addItemReverse(card);
         newCardPopup.close();
-
-        window.location.reload();
       })
       .catch(err => console.log(err));
    }

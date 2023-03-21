@@ -5,16 +5,18 @@ export class UserInfo {
     this._userAvatarElement = document.querySelector(userAvatarSelector);
   }
 
-  getUserInfo() {   
+  getUserInfo() {
     return {
       userName: this._userNameElement.textContent,
-      userDescription: this._userDescriptionElement.textContent
+      userDescription: this._userDescriptionElement.textContent,
+      userId: this._userId
     };
   }
 
-  setUserInfo(item) {  
+  setUserInfo(item) {    
     this._userNameElement.textContent = item.name;
     this._userDescriptionElement.textContent = item.about;
-    this._userAvatarElement.src = item.avatar
+    this._userAvatarElement.src = item.avatar;
+    this._userId = item._id;
   }
 }
