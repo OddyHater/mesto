@@ -1,32 +1,29 @@
 import { Popup } from "./Popup";
 
 export class PopupWithDelete extends Popup {
-    constructor(popupSelector, buttonClickCallback, card) {
+    constructor(popupSelector, buttonClickCallback, elementToDelete) {
         super(popupSelector);
         this._buttonClickCallback = buttonClickCallback;
-        this._button = this._popup.querySelector('.popup-delete__submit');
-        this._card = card;
+        this._button = this._popup.querySelector('.popup-delete__submit');        
     }
 
-    open(id, card) {
+    open(id, element) {
         this._id = id;    //при открытии получаем id и разметку удаляемой капрточки
-        this._card = card;
+        this._elementToDelete = element;
         
         super.open();
     }
 
-    removeCard(card) {
-      card.remove();
+    removeElement() {
+        this._elementToDelete.remove();
     }
 
     setEventListeners() {
         super.setEventListeners();
         
         this._button.addEventListener('click', () => {
-            this._buttonClickCallback(this._id); //передаем id в колбек
-            this.removeCard(this._card); //передаем разметку карточки для удаления при сабмите
-
-            this.close();
+            this._buttonClickCallback(this._id); //передаем id в колбек 
+            this.removeElement(this._elementToDelete);  
         });
     }
 }

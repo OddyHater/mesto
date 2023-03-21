@@ -33,12 +33,6 @@ class Card {
 
     this._likeButton.addEventListener('click', (evt) => {
       this._likeButtonCallback(evt);
-
-      if (evt.target.classList.contains('like_active')) {
-        this._likesNumberElement.textContent = Number(this._likesNumberElement.textContent) - 1;
-      } else {
-        this._likesNumberElement.textContent = Number(this._likesNumberElement.textContent) + 1;
-      }
       
       this._clickLike();
     });
@@ -83,6 +77,10 @@ class Card {
 
     return this._cardElement; //Возвращаем разметку карточки.
   };
+
+  removeCard() {
+    this._cardElement.remove();
+  }
 }
 
 export { Card };

@@ -48,10 +48,10 @@ const apiOptions = {
 const api = new Api(apiOptions);
 
 api.getProfileInfo()
-  .then(data => {    
+  .then(data => {
     inputValuesChecker.setUserInfo(data);
   })
-  .catch((err) => console.log(err)); 
+  .catch((err) => console.log(err));
 
 
 //Колбеки для передачи в конструктор класса
@@ -90,10 +90,26 @@ function trasherCallback(cardID, evt) {
 };
 
 function cardLikeCallback(evt, cardId) {
-  if(evt.target.classList.contains('like_active')) {    
-    api.removeLike(cardId);
+  const likeNumber = evt.target
+    .closest('.card__like-wrapper')
+    .querySelector('.card__like-number');
+
+  if(evt.target.classList.contains('like_active')) {
+    api.removeLike(cardId)
+      .then(res => {
+        if(res) {
+          likeNumber.textContent = Number(likeNumber.textContent) - 1;
+        } else(err => console.log(err));
+      })
+      .catch(err => console.log(err));
   } else {    
-    api.addLike(cardId);
+    api.addLike(cardId)
+      .then(res => {
+        if(res) {
+          likeNumber.textContent = Number(likeNumber.textContent) + 1;
+        } else(err => console.log(err)); 
+    })
+    .catch(err => console.log(err));
   }
 };
 
@@ -124,15 +140,22 @@ const appender = new Section({
 const deleteCardPopup = new PopupWithDelete( 
   '#popup-delete',
   (cardId) => {
-    api.removeCardFromServer(cardId); //колбек сабмита
+    api.removeCardFromServer(cardId)
+      .then(res => {
+        if(res) {
+          deleteCardPopup.close();
+        }
+      }); //колбек сабмита
 });
 
 const editAvatarPopup = new PopupWithForm({
   popupSelector: '#popup-edit-avatar',
   submitCallBack: (item) => {
-
     api.changeAvatar(item.link)
-    profileAvatar.src = item.link;
+      .then(res => {
+        editAvatarPopup.close();
+        profileAvatar.src = item.link;
+      });    
   }
 });
 
@@ -143,6 +166,7 @@ const newCardPopup = new PopupWithForm({
       .then(res => {
         const card = createCard(item);
         appender.addItemReverse(card);
+        newCardPopup.close();
 
         window.location.reload();
       })
@@ -169,8 +193,8 @@ const inputValuesChecker = new UserInfo({  //Следим за состояни�
   userAvatarSelector: '.profile__avatar'
 });
 
-const addCardValidator = new FormValidator(validationSettings, popupNewCard) //Подключаем Валидатор
-const editProfileValidator = new FormValidator(validationSettings, editProfilePopup) 
+const addCardValidator = new FormValidator(validationSettings, popupNewCard); //Подключаем Валидатор
+const editProfileValidator = new FormValidator(validationSettings, editProfilePopup);
 //Классы----------------------------------------
 
 

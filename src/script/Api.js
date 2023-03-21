@@ -16,7 +16,7 @@ export class Api {
     })
       .then(res => {
         return this._getResponseData(res);
-      })
+      });
   }
 
   changeProfileInfo(item) {
