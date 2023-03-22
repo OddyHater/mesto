@@ -13,6 +13,15 @@ export class UserInfo {
     };
   }
 
+  setAvatar(link) {
+    this._userAvatarElement.src = link;
+  }
+
+  setUserDescription(item) {
+    this._userNameElement.textContent = item.name;
+    this._userDescriptionElement.textContent = item.link;
+  }
+
   setUserInfo(item) {    
     this._userNameElement.textContent = item.name;
     this._userDescriptionElement.textContent = item.about;

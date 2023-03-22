@@ -27,9 +27,12 @@ export class Api {
         name: item.name,
         about: item.link
       })
-      .then(res => {
-        return this._getResponseData(res);
-      })
+    })
+    .then(res => {
+      return this._getResponseData(res);
+    })
+    .catch(err => {
+      console.log(err);
     });
   }
 
@@ -100,8 +103,7 @@ export class Api {
       return this._getResponseData(res);
     })
     .then((result) => {
-      console.log(result);
-      const cards = []
+      const cards = [];
       result.forEach(card => {   //проходим по объектам, формируем будущую карточку
         let cardData = {
           name: card.name,

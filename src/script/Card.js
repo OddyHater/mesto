@@ -1,9 +1,12 @@
 class Card {
-  constructor(data, templateSelector, handleCardClick, trasherCallback, likeButtonCallback) {
+  constructor(data, templateSelector, handleCardClick, trasherCallback, likeButtonCallback, ownerId) {
+    this._data = data;
     this._name = data.name;
     this._imageLink = data.link;
     this._likesNumber = data.likes;
-    this._cardOwner = data.owner;
+    this._myId = ownerId;
+    this._cardOwner = data.owner || this._myId; //если мы только что создали карточку - присваиваем ей наш id
+    this._likesArr = data.likesAr ?? []; //избегаем ошибок с только что создавшейся карточкой
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
     this._trasherCallback = trasherCallback;
@@ -24,16 +27,26 @@ class Card {
     this._likeButton.classList.toggle('like_active');
   };
 
-  _deleteCard() {
+  deleteCard() {
     this._cardElement.remove(); // что значит зануллить? 
   }
 
+  //Логика лайка карточек
   toggleLikeNumber(isLiked) {
     if(isLiked) {
       this._likesNumberElement.textContent = Number(this._likesNumberElement.textContent) - 1;
     } else {
       this._likesNumberElement.textContent = Number(this._likesNumberElement.textContent) + 1;
     }
+  }
+
+  _showHowManyLikes() {
+    this._likesNumberElement = this._cardElement.querySelector('.card__like-number');
+    if(this._likesNumber) {
+      this._likesNumberElement.textContent = this._likesNumber;
+    } else {
+      this._likesNumberElement.textContent = 0;      
+    }  
   }
 
   _addLikeListener() {
@@ -47,6 +60,16 @@ class Card {
     });
   };
 
+  _paintMyOwnLike() {
+    this._likesArr.forEach(like => {
+      if (like._id == this._myId) {
+        this._likeButton.classList.add('like_active');      
+      }
+    });
+  }
+  //Логика лайка карточек
+
+  //Логика кнопки delete карточек
   _addTrashListener() {
     this._trashButton = this._cardElement.querySelector('.card__trash-button');
 
@@ -55,14 +78,12 @@ class Card {
     });
   };
 
-  _showHowManyLikes() {
-    this._likesNumberElement = this._cardElement.querySelector('.card__like-number');
-    if(this._likesNumber) {
-      this._likesNumberElement.textContent = this._likesNumber;
-    } else {
-      this._likesNumberElement.textContent = 0;      
-    }  
+  _removeTrashButton() {
+    if(!(this._cardOwner === this._myId)) {
+      this._trashButton.remove();
+    }
   }
+  //Логика кнопки delete карточек
 
   _addOpenImagePopupListener() { // Навешиваем обработчик, приходящий из handleCardClick
     this._cardImage.addEventListener('click', () => {
@@ -83,15 +104,11 @@ class Card {
     this._cardTitle.textContent = this._name;
     this._cardImage.alt = this._name;
     this._cardImage.src = this._imageLink;
-
-    console.log(this._cardOwner);
+    this._paintMyOwnLike();
+    this._removeTrashButton();
 
     return this._cardElement; //Возвращаем разметку карточки.
   };
-
-  removeCard() {
-    this._cardElement.remove();
-  }
 }
 
 export { Card };
