@@ -6,7 +6,7 @@ class Card {
     this._likesNumber = data.likes;
     this._myId = ownerId;
     this._cardOwner = data.owner || this._myId; //если мы только что создали карточку - присваиваем ей наш id
-    this._likesArr = data.likesAr ?? []; //избегаем ошибок с только что создавшейся карточкой
+    this._likesArr = data.likesArr ?? []; //избегаем ошибок с только что создавшейся карточкой
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
     this._trasherCallback = trasherCallback;
@@ -60,9 +60,9 @@ class Card {
     });
   };
 
-  _paintMyOwnLike() {
-    this._likesArr.forEach(like => {
-      if (like._id == this._myId) {
+  _paintMyOwnLike() {    
+    this._likesArr.forEach(like => {      
+      if (like._id == this._myId) {        
         this._likeButton.classList.add('like_active');      
       }
     });

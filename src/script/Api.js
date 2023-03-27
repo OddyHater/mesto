@@ -11,16 +11,16 @@ export class Api {
   }
 
   getProfileInfo() {
-    return fetch('https://nomoreparties.co/v1/cohort-60/users/me', {
+    return fetch('https://nomoreparties.co/v1/cohort-62/users/me', {
       headers: this._headers
     })
-      .then(res => {
+      .then(res => {        
         return this._getResponseData(res);
       });
   }
 
   changeProfileInfo(item) {
-    return fetch('https://nomoreparties.co/v1/cohort-60/users/me', {
+    return fetch('https://nomoreparties.co/v1/cohort-62/users/me', {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
@@ -37,7 +37,7 @@ export class Api {
   }
 
   pushCardToServer(name, link, like, id) {    
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-60/cards', {
+    return fetch('https://mesto.nomoreparties.co/v1/cohort-62/cards', {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
@@ -53,7 +53,7 @@ export class Api {
   }
 
   removeCardFromServer(cardID) {
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-60/cards/${cardID}`, {
+    return fetch(`https://mesto.nomoreparties.co/v1/cohort-62/cards/${cardID}`, {
       method: 'DELETE',
       headers: this._headers
     })
@@ -63,7 +63,7 @@ export class Api {
   }
 
   addLike(cardId) {
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-60/cards/${cardId}/likes`, {
+    return fetch(`https://mesto.nomoreparties.co/v1/cohort-62/cards/${cardId}/likes`, {
       method: 'PUT',
       headers: this._headers
     })
@@ -73,7 +73,7 @@ export class Api {
   }
 
   removeLike(cardId) {
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-60/cards/${cardId}/likes`, {
+    return fetch(`https://mesto.nomoreparties.co/v1/cohort-62/cards/${cardId}/likes`, {
       method: 'DELETE', 
       headers: this._headers
     })
@@ -83,7 +83,7 @@ export class Api {
   }
 
   changeAvatar(link) {  
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-60/users/me/avatar`, {
+    return fetch(`https://mesto.nomoreparties.co/v1/cohort-62/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
@@ -96,7 +96,7 @@ export class Api {
   }
 
   getInitialCards() {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-60/cards', {
+    return fetch('https://mesto.nomoreparties.co/v1/cohort-62/cards', {
       headers: this._headers
     })
     .then(res => {

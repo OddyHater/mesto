@@ -35,8 +35,8 @@
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.11.1"
   },
-  "dependencies": {    
-    "core-js": "^3.28.0"    
+  "dependencies": {
+    "core-js": "^3.28.0"
   },
   "keywords": []
 }

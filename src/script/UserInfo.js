@@ -22,10 +22,10 @@ export class UserInfo {
     this._userDescriptionElement.textContent = item.link;
   }
 
-  setUserInfo(item) {    
+  setUserInfo(item) {
     this._userNameElement.textContent = item.name;
     this._userDescriptionElement.textContent = item.about;
     this._userAvatarElement.src = item.avatar;
-    this._userId = item._id;
+    this._userId = item._id;    
   }
 }

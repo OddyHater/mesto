@@ -37,7 +37,7 @@ const editAvatarButton = document.querySelector('.profile__avatar-edit');
 
 const apiOptions = {  
   headers: {
-    authorization: 'a85e5fd1-766e-427c-ac2c-de92362af89e',
+    authorization: '49fa0164-6f79-4747-b9b7-a7fde6f409fd',
     'Content-type': 'application/json'
   }
 };
@@ -45,7 +45,7 @@ const apiOptions = {
 const api = new Api(apiOptions);
 
 api.getProfileInfo()
-  .then(data => {
+  .then(data => {    
     userInfo.setUserInfo(data);
   })
   .catch((err) => console.log(err));
