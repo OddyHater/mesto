@@ -23,12 +23,13 @@ class Card {
     return cardTemplate;
   };
 
-  _clickLike() {
+  clickLike() {
     this._likeButton.classList.toggle('like_active');
   };
 
   deleteCard() {
-    this._cardElement.remove(); // что значит зануллить? 
+    this._cardElement.remove();
+    this._cardElement = null;
   }
 
   //Логика лайка карточек
@@ -55,14 +56,12 @@ class Card {
 
     this._likeButton.addEventListener('click', (evt) => {
       this._likeButtonCallback(evt);
-      
-      this._clickLike();
     });
   };
 
   _paintMyOwnLike() {    
     this._likesArr.forEach(like => {      
-      if (like._id == this._myId) {        
+      if (like._id === this._myId) {        
         this._likeButton.classList.add('like_active');      
       }
     });
