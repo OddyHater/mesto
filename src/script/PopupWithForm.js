@@ -11,12 +11,6 @@ export class PopupWithForm extends Popup {
     this._closeButton = this._popup.querySelector('.popup__close-button');
   }
 
-  open() {
-    super.open();
-
-    this.renderLoading(false);
-  }
-
   close() {
     super.close();
 

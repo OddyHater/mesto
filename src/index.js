@@ -137,18 +137,20 @@ const popupWithDeleteCard = new PopupWithDelete(
 const popupAvatar = new PopupWithForm({
   popupSelector: '#popup-edit-avatar',
   submitCallBack: (item) => {
-    api.changeAvatar(item.link)
-      .then(res => {
-        popupAvatar.close();
+    popupAvatar.renderLoading(true);
+    api.changeAvatar(item.link)      
+      .then(() => {
         userInfo.setAvatar(item.link);
-      })
-      .finally(() => popupAvatar.renderLoading(true));
+        popupAvatar.close();
+      })      
+      .finally(() => popupAvatar.renderLoading(false));
   }
 });
 
 const newCardPopup = new PopupWithForm({
   popupSelector: '#popup-new-card',
   submitCallBack: (item) => {   //В классе PopupWithForm вместо item попадает getInputValues()
+    newCardPopup.renderLoading(true);
     api.pushCardToServer(item.name, item.link, item.likes, item._id)
       .then(res => {
         item['id'] = res._id;
@@ -158,20 +160,21 @@ const newCardPopup = new PopupWithForm({
         newCardPopup.close();
       })
       .catch(err => console.log(err))
-      .finally(() => newCardPopup.renderLoading(true));
+      .finally(() => newCardPopup.renderLoading(false));
    }
 });
 
 const profilePopup = new PopupWithForm({
   popupSelector: '#popup-profile',
   submitCallBack: (item) => {    //В классе PopupWithForm вместо item попадает getInputValues()
+    profilePopup.renderLoading(true);
     api.changeProfileInfo(item)
       .then(res => {
         userInfo.setUserDescription(item);
         profilePopup.close();
       })
       .catch(err => console.log(err))
-      .finally(() => profilePopup.renderLoading(true))
+      .finally(() => profilePopup.renderLoading(false));
   }
 });
 
